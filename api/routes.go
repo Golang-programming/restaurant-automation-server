@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.co/golang-programming/restaurant/src/food"
-	"github.co/golang-programming/restaurant/src/invoice"
-	"github.co/golang-programming/restaurant/src/menu"
-	"github.co/golang-programming/restaurant/src/note"
-	"github.co/golang-programming/restaurant/src/order"
-	"github.co/golang-programming/restaurant/src/table"
-	"github.co/golang-programming/restaurant/src/user"
+	"github.co/golang-programming/restaurant/api/food"
+	"github.co/golang-programming/restaurant/api/invoice"
+	"github.co/golang-programming/restaurant/api/menu"
+	"github.co/golang-programming/restaurant/api/note"
+	"github.co/golang-programming/restaurant/api/order"
+	"github.co/golang-programming/restaurant/api/table"
+	"github.co/golang-programming/restaurant/api/user"
 	"github.com/gin-gonic/gin"
 )
 
