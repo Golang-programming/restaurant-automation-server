@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"log"
 
 	foodEntity "github.co/golang-programming/restaurant/api/food/entity"
@@ -14,29 +15,23 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+var ActiveDB gorm.DB
 
-func ConnectToDatabase() {
+type TenantConfig struct {
+	DB  *gorm.DB
+	DSN string
+}
 
-	dsn := "root:password@tcp(127.0.0.1:3307)/restaurant_golang?charset=utf8mb4&parseTime=True&loc=Local"
+var tenants = make(map[string]*TenantConfig)
+
+func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
+	fmt.Println("tenantID, dsn", tenantID, dsn)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
 	if err != nil {
-		log.Fatalf("Could not connect to database: %v", err)
+		return nil, err
 	}
 
-	DB = db
-	/*
-		DB.AutoMigrate(&foodEntity.Food{})
-		DB.AutoMigrate(&userEntity.User{})
-		DB.AutoMigrate(&invoiceEntity.Invoice{})
-		DB.AutoMigrate(&orderEntity.Order{})
-		DB.AutoMigrate(&orderEntity.OrderItem{})
-		DB.AutoMigrate(&tableEntity.Table{})
-		DB.AutoMigrate(&noteEntity.Note{})
-		DB.AutoMigrate(&menuEntity.Menu{}) */
-
-	DB.AutoMigrate(
+	db.AutoMigrate(
 		&foodEntity.Food{},
 		&userEntity.User{},
 		&invoiceEntity.Invoice{},
@@ -47,4 +42,36 @@ func ConnectToDatabase() {
 		&menuEntity.Menu{},
 	)
 
+	tenants[tenantID] = &TenantConfig{
+		DB:  db,
+		DSN: dsn,
+	}
+
+	return db, nil
+}
+
+func ConnectToDatabase() {
+	tenantList := []struct {
+		TenantID string
+		DSN      string
+	}{
+		{"tenant1", "root:@tcp(127.0.0.1:3306)/tenant1_db?charset=utf8mb4&parseTime=True&loc=Local"},
+		{"tenant2", "root:@tcp(127.0.0.1:3306)/tenant2_db?charset=utf8mb4&parseTime=True&loc=Local"},
+	}
+
+	for _, tenant := range tenantList {
+		if _, err := initTenantDB(tenant.TenantID, tenant.DSN); err != nil {
+			log.Fatalf("Could not connect to tenant database (%s): %v", tenant.TenantID, err)
+		}
+	}
+}
+
+func SetDB(tenantID string) error {
+	tenantConfig, exists := tenants[tenantID]
+	if !exists {
+		return fmt.Errorf("tenant not found")
+	}
+
+	ActiveDB = *tenantConfig.DB
+	return nil
 }
