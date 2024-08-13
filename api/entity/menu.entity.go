@@ -1,5 +1,9 @@
 package entity
 
+import "gorm.io/gorm"
+
 type Menu struct {
-	Name string `gorm:"type:varchar(255); not null"`
+	gorm.Model
+	Name  string `gorm:"type:varchar(255); not null"`
+	Foods []Food `gorm:"foreignKey:MenuID"`
 }

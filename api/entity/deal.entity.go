@@ -8,14 +8,17 @@ import (
 
 type Deal struct {
 	gorm.Model
-	ValidDue time.Time  `json:"valid_due"`
-	Status   string     `json:"status"`
-	Items    []DealItem `json:"items" gorm:"foreignKey:DealID;constraint:OnDelete:CASCADE;"` // Relationship with DealItem
+	Name     string     `gorm:"type:varchar(255); not null"`
+	ValidDue time.Time  `gorm:"not null"`
+	Status   string     `gorm:"type:enum('active', 'inactive'); not null"`
+	Items    []DealItem `gorm:"foreignKey:DealID;constraint:OnDelete:CASCADE;"`
 }
 
 type DealItem struct {
 	gorm.Model
-	DealID   uint `json:"deal_id"`
-	FoodID   uint `json:"food_id"`
-	Quantity int  `json:"quantity"`
+	DealID   uint `gorm:"not null"`
+	Deal     Deal `gorm:"foreignKey:DealID"`
+	FoodID   uint `gorm:"not null"`
+	Food     Food `gorm:"foreignKey:FoodID"`
+	Quantity int  `gorm:"type:int;not null"`
 }

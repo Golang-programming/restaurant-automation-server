@@ -1,6 +1,8 @@
 package entity
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type BillStatus string
 
@@ -16,13 +18,11 @@ type Bill struct {
 	Discount   float64    `gorm:"type:decimal(10,2); not null; default:0"`
 	Total      float64    `gorm:"type:decimal(10,2); not null"`
 	Paid       float64    `gorm:"type:decimal(10,2); not null; default:0"`
-	Status     BillStatus `gorm:"type:enum('Pending','paid', 'refunded'); not null; default:'pending'"`
-	BillID     uint       `gorm:"not null"`
-	ParentBill *Bill      `gorm:"foreignKey:BillID"`
+	Status     BillStatus `gorm:"type:enum('pending','paid', 'refunded'); not null; default:'pending'"`
 	OrderID    uint       `gorm:"not null"`
 	Order      Order      `gorm:"foreignKey:OrderID"`
-	TableID    uint       `gorm:"not null"`
-	Table      Table      `gorm:"foreignKey:TableID"`
 	CustomerID uint       `gorm:"not null"`
 	Customer   Customer   `gorm:"foreignKey:CustomerID"`
+	InvoiceID  uint       `gorm:"not null"`
+	Invoice    Invoice    `gorm:"foreignKey:InvoiceID"`
 }

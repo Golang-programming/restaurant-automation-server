@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type OrderItemStatus string
 
-var (
+const (
 	Ordering OrderItemStatus = "ordering"
 	Making   OrderItemStatus = "making"
 	Placed   OrderItemStatus = "placed"
@@ -18,4 +18,5 @@ type OrderItem struct {
 	Order    Order           `gorm:"foreignKey:OrderID"`
 	Quantity int             `gorm:"type:int;not null"`
 	Status   OrderItemStatus `gorm:"type:enum('ordering','making','placed');not null;default:'ordering'"`
+	Notes    []Note          `gorm:"foreignKey:OrderItemID"`
 }
