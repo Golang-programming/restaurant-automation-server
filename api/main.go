@@ -1,24 +1,32 @@
 package main
 
-import (
-	"fmt"
-	"os"
+import "fmt"
 
-	"github.co/golang-programming/restaurant/api/database"
-	"github.com/gin-gonic/gin"
-)
+// Define an interface for Animal
+type Animal interface {
+	Speak() string
+}
+
+// Define a struct for Dog that implements the Animal interface
+type Dog struct{}
+
+func (d Dog) Speak() string {
+	return "Woof!"
+}
+
+// Define a struct for Cat that implements the Animal interface
+type Cat struct{}
+
+func (c Cat) Speak() string {
+	return "Meow!"
+}
 
 func main() {
-	LoadEnv()
-	PORT := os.Getenv("PORT")
+	// Create instances of Dog and Cat
+	var dog Animal = Dog{}
+	var cat Animal = Cat{}
 
-	app := gin.New()
-
-	v1 := app.Group("/v1")
-	RegisterRoutes(v1)
-
-	database.ConnectToDatabase()
-
-	fmt.Println("App running on port: ", PORT)
-	app.Run(":" + PORT)
+	// Call the Speak method on both
+	fmt.Println(dog.Speak()) // Output: Woof!
+	fmt.Println(cat.Speak()) // Output: Meow!
 }

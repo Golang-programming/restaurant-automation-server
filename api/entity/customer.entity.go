@@ -7,7 +7,6 @@ import (
 type Customer struct {
 	gorm.Model
 	TotalGuests int     `gorm:"type:int;not null"`
-	Email       *string `gorm:"type:varchar(100)"`
-	Phone       *string `gorm:"type:varchar(50)"`
-	Orders      []Order `gorm:"foreignKey:CustomerID"` // One-to-many relationship with Order
+	Name        string  `gorm:"type:varchar(255);null"`
+	Orders      []Order `gorm:"foreignKey:CustomerID"`
 }
