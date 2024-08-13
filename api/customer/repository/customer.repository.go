@@ -16,6 +16,7 @@ func GetCustomerByID(id string) (*entity.Customer, error) {
 	if err := db.First(&customer, id).Error; err != nil {
 		return nil, err
 	}
+
 	return &customer, nil
 }
 

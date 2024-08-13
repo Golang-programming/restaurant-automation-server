@@ -11,11 +11,20 @@ func CreateMenu(menu *entity.Menu) error {
 	return db.Create(menu).Error
 }
 
-func GetMenuByID(id uint) (*entity.Menu, error) {
+func GetMenuDetailsByID(id uint) (*entity.Menu, error) {
 	var menu entity.Menu
 	if err := db.Preload("Foods").Preload("Deals").First(&menu, id).Error; err != nil {
 		return nil, err
 	}
+
+	return &menu, nil
+}
+func GetMenuByID(id uint) (*entity.Menu, error) {
+	var menu entity.Menu
+	if err := db.First(&menu, id).Error; err != nil {
+		return nil, err
+	}
+
 	return &menu, nil
 }
 

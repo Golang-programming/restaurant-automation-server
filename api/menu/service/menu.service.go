@@ -3,7 +3,9 @@ package service
 import (
 	"errors"
 
+	dealService "github.co/golang-programming/restaurant/api/deal/service"
 	"github.co/golang-programming/restaurant/api/entity"
+	foodService "github.co/golang-programming/restaurant/api/food/service"
 	"github.co/golang-programming/restaurant/api/menu/dto"
 	"github.co/golang-programming/restaurant/api/menu/repository"
 )
@@ -18,6 +20,10 @@ func CreateMenu(input *dto.CreateMenuInput) (*entity.Menu, error) {
 		return nil, err
 	}
 	return menu, nil
+}
+
+func GetMenuDetailsByID(id uint) (*entity.Menu, error) {
+	return repository.GetMenuDetailsByID(id)
 }
 
 func GetMenuByID(id uint) (*entity.Menu, error) {
@@ -56,13 +62,14 @@ func ListMenus() ([]entity.Menu, error) {
 	return repository.ListMenus()
 }
 
+/******* add and remove items from menu *******/
 func AddFoodToMenu(menuID uint, input *dto.AddFoodToMenuInput) (*entity.Menu, error) {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
 		return nil, err
 	}
 
-	food, err := repository.GetFoodByID(input.FoodID) // Assuming you have a function to get Food by ID
+	food, err := foodService.GetFoodByID(input.FoodID)
 	if err != nil {
 		return nil, errors.New("food not found")
 	}
@@ -102,7 +109,7 @@ func AddDealToMenu(menuID uint, input *dto.AddDealToMenuInput) (*entity.Menu, er
 		return nil, err
 	}
 
-	deal, err := repository.GetDealByID(input.DealID) // Assuming you have a function to get Deal by ID
+	deal, err := dealService.GetDealByID(input.DealID)
 	if err != nil {
 		return nil, errors.New("deal not found")
 	}
