@@ -4,13 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	foodEntity "github.co/golang-programming/restaurant/api/food/entity"
-	invoiceEntity "github.co/golang-programming/restaurant/api/invoice/entity"
-	menuEntity "github.co/golang-programming/restaurant/api/menu/entity"
-	noteEntity "github.co/golang-programming/restaurant/api/note/entity"
-	orderEntity "github.co/golang-programming/restaurant/api/order/entity"
-	tableEntity "github.co/golang-programming/restaurant/api/table/entity"
-	userEntity "github.co/golang-programming/restaurant/api/user/entity"
+	"github.co/golang-programming/restaurant/api/entity"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -32,14 +26,20 @@ func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
 	}
 
 	db.AutoMigrate(
-		&foodEntity.Food{},
-		&userEntity.User{},
-		&invoiceEntity.Invoice{},
-		&orderEntity.Order{},
-		&orderEntity.OrderItem{},
-		&tableEntity.Table{},
-		&noteEntity.Note{},
-		&menuEntity.Menu{},
+		&entity.Bill{},
+		&entity.Customer{},
+		&entity.Deal{},
+		&entity.DealItem{},
+		&entity.Food{},
+		&entity.Invoice{},
+		&entity.InvoiceItem{},
+		&entity.Menu{},
+		&entity.Note{},
+		&entity.Order{},
+		&entity.OrderItem{},
+		&entity.Reservation{},
+		&entity.Table{},
+		&entity.User{},
 	)
 
 	tenants[tenantID] = &TenantConfig{
@@ -55,8 +55,8 @@ func ConnectToDatabase() {
 		TenantID string
 		DSN      string
 	}{
-		{"tenant1", "root:@tcp(127.0.0.1:3306)/tenant1_db?charset=utf8mb4&parseTime=True&loc=Local"},
-		{"tenant2", "root:@tcp(127.0.0.1:3306)/tenant2_db?charset=utf8mb4&parseTime=True&loc=Local"},
+		{"tenant1", "root:@tcp(127.0.0.1:3306)/restaurant_1?charset=utf8mb4&parseTime=True&loc=Local"},
+		{"tenant2", "root:@tcp(127.0.0.1:3306)/restaurant_2?charset=utf8mb4&parseTime=True&loc=Local"},
 	}
 
 	for _, tenant := range tenantList {

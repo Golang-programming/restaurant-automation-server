@@ -19,4 +19,5 @@ type User struct {
 	Phone     string   `gorm:"type:varchar(50); not null"`
 	CNIC      string   `gorm:"type:varchar(50); not null"`
 	Role      UserRole `gorm:"type:enum('chef', 'waiter'); not null"`
+	Orders    []Order  `gorm:"foreignKey:UserID"`
 }
