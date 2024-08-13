@@ -4,9 +4,9 @@ import (
 	"gorm.io/gorm"
 )
 
-type Table struct {
+type Customer struct {
 	gorm.Model
-	TotalGuests int   `gorm:"type:int;not null;"`
+	TotalGuests int   `gorm:"type:int;not null"`
 	TableID     uint  `gorm:"not null"`
 	Table       Table `gorm:"foreignKey:TableID"`
 }
