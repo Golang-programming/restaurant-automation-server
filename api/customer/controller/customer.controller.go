@@ -70,7 +70,8 @@ func ListCustomers(ctx *gin.Context) {
 }
 
 func DeactivateCustomer(ctx *gin.Context) {
-	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	val, _ := ctx.Get("currentCustomerID")
+	id, _ := strconv.ParseUint(val.(string), 10, 32)
 
 	err := service.RemoveCustomerFromActiveList(uint(id))
 	if err != nil {

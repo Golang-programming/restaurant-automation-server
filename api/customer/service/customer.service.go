@@ -1,23 +1,27 @@
 package service
 
 import (
+	"fmt"
+
 	"github.co/golang-programming/restaurant/api/customer/dto"
 	"github.co/golang-programming/restaurant/api/customer/repository"
 	"github.co/golang-programming/restaurant/api/customer/utils"
 	"github.co/golang-programming/restaurant/api/entity"
+
+	commonUtils "github.co/golang-programming/restaurant/api/utils/encryption"
 )
 
-func CreateCustomer(input *dto.CreateCustomerInput) (*entity.Customer, error) {
+func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 	customer := &entity.Customer{
 		TotalGuests: input.TotalGuests,
 		Name:        input.Name,
 	}
 	if err := repository.CreateCustomer(customer); err != nil {
-		return nil, err
+		return "", err
 	}
 
 	utils.AddCustomerToActiveList(customer.ID, customer)
-	return customer, nil
+	return commonUtils.Encryptor(fmt.Sprint(customer.ID))
 }
 
 func GetCustomerByID(id uint) (*entity.Customer, error) {

@@ -18,6 +18,6 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	groupRouter.DELETE("/:id", controller.DeleteCustomer)
 	groupRouter.GET("/", controller.ListCustomers)
 
-	groupRouter.PUT("/deactivate-customer/:id", controller.DeactivateCustomer)
+	groupRouter.PUT("/deactivate", middleware.CustomerMiddleware(), controller.DeactivateCustomer)
 
 }
