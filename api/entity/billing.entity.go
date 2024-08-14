@@ -18,8 +18,8 @@ type Bill struct {
 	Discount     float64    `gorm:"type:decimal(10,2); not null; default:0"`
 	Total        float64    `gorm:"type:decimal(10,2); not null"`
 	Paid         float64    `gorm:"type:decimal(10,2); not null; default:0"`
-	Status       BillStatus `gorm:"type:enum('Pending','paid', 'refunded'); not null; default:'pending'"`
-	ParentBillID *uint      `gorm:"index"` // Allow self-referencing for parent bills
+	Status       BillStatus `gorm:"type:enum('pending','paid', 'refunded'); not null; default:'pending'"`
+	ParentBillID *uint      `gorm:"index"`
 	ParentBill   *Bill      `gorm:"foreignKey:ParentBillID"`
 	OrderID      uint       `gorm:"not null"`
 	Order        *Order     `gorm:"foreignKey:OrderID"`
@@ -27,5 +27,5 @@ type Bill struct {
 	Table        *Table     `gorm:"foreignKey:TableID"`
 	CustomerID   uint       `gorm:"not null"`
 	Customer     *Customer  `gorm:"foreignKey:CustomerID"`
-	Invoices     []Invoice  `gorm:"foreignKey:BillID"` // One-to-many relationship with Invoice
+	Invoices     []Invoice  `gorm:"foreignKey:BillID"`
 }
