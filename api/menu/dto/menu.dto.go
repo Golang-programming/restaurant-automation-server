@@ -1,9 +1,9 @@
 package dto
 
 type CreateMenuInput struct {
-	Name        string `json:"name" binding:"required" validate:"required,min=2,max=255"`
-	Description string `json:"description" validate:"omitempty"`
-	Status      string `json:"status" binding:"required" validate:"required,oneof='active' 'inactive'"`
+	Name        string `json:"name" validate:"required"`
+	Description string `json:"description,omitempty"`
+	Status      string `json:"status,omitempty"`
 }
 
 type UpdateMenuInput struct {
