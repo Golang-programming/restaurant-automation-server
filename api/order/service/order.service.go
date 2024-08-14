@@ -16,24 +16,20 @@ func CreateOrder(input *dto.CreateOrderInput) (*entity.Order, error) {
 	if err := repository.CreateOrder(order); err != nil {
 		return nil, err
 	}
-
 	return order, nil
 }
 
-func GetOrderByID(id uint) (*entity.Order, error) {
-	return repository.GetOrderByID(id)
+func GetOrderDetailsByID(orderID uint) (*entity.Order, error) {
+	return repository.GetOrderDetailsByID(orderID)
 }
 
-func UpdateOrder(id uint, input *dto.UpdateOrderInput) (*entity.Order, error) {
-	order, err := repository.GetOrderByID(id)
+func UpdateOrderStatus(orderID uint, input *dto.UpdateOrderStatusInput) (*entity.Order, error) {
+	order, err := getOrderByID(orderID)
 	if err != nil {
 		return nil, err
 	}
 
-	if input.Status != "" {
-		order.Status = input.Status
-	}
-
+	order.Status = input.Status
 	if err := repository.UpdateOrder(order); err != nil {
 		return nil, err
 	}
@@ -41,8 +37,8 @@ func UpdateOrder(id uint, input *dto.UpdateOrderInput) (*entity.Order, error) {
 	return order, nil
 }
 
-func DeleteOrder(id uint) error {
-	order, err := repository.GetOrderByID(id)
+func DeleteOrder(orderID uint) error {
+	order, err := getOrderByID(orderID)
 	if err != nil {
 		return err
 	}
@@ -54,9 +50,8 @@ func ListOrders() ([]entity.Order, error) {
 	return repository.ListOrders()
 }
 
-// Order Items
 func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem, error) {
-	order, err := repository.GetOrderByID(orderID)
+	_, err := getOrderByID(orderID)
 	if err != nil {
 		return nil, err
 	}
@@ -68,29 +63,20 @@ func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem
 		Status:   entity.OrderItemOrdering,
 	}
 
-	order.OrderItems = append(order.OrderItems, *orderItem)
-
-	if err := repository.UpdateOrder(order); err != nil {
+	if err := repository.AddOrderItem(orderItem); err != nil {
 		return nil, err
 	}
 
 	return orderItem, nil
 }
 
-func UpdateOrderItem(orderID, itemID uint, input *dto.UpdateOrderItemInput) (*entity.OrderItem, error) {
-	orderItem, err := repository.GetOrderItemByID(orderID, itemID)
+func UpdateOrderItemStatus(orderID, itemID uint, input *dto.UpdateOrderItemStatusInput) (*entity.OrderItem, error) {
+	orderItem, err := getOrderItemByID(orderID)
 	if err != nil {
 		return nil, err
 	}
 
-	if input.Status != "" {
-		orderItem.Status = input.Status
-	}
-
-	if input.Quantity > 0 {
-		orderItem.Quantity = input.Quantity
-	}
-
+	orderItem.Status = input.Status
 	if err := repository.UpdateOrderItem(orderItem); err != nil {
 		return nil, err
 	}
@@ -99,19 +85,21 @@ func UpdateOrderItem(orderID, itemID uint, input *dto.UpdateOrderItemInput) (*en
 }
 
 func RemoveOrderItem(orderID, itemID uint) error {
-	order, err := repository.GetOrderByID(orderID)
+	orderItem, err := getOrderItemByID(itemID)
 	if err != nil {
 		return err
 	}
+	return repository.RemoveOrderItem(orderItem)
+}
 
-	orderItem, err := repository.GetOrderItemByID(orderID, itemID)
-	if err != nil {
-		return err
-	}
+func getOrderByID(orderID uint) (order *entity.Order, err error) {
+	order, err = repository.GetOrderByID(orderID)
 
-	if err := repository.DeleteOrderItem(orderItem); err != nil {
-		return err
-	}
+	return
+}
 
-	return repository.UpdateOrder(order)
+func getOrderItemByID(itemID uint) (orderItem *entity.OrderItem, err error) {
+	orderItem, err = repository.GetOrderItemByID(itemID)
+
+	return
 }

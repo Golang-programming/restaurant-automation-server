@@ -13,6 +13,11 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	groupRouter.POST("/", middleware.InputValidator(&dto.CreateCustomerInput{}), controller.CreateCustomer)
 	groupRouter.GET("/:id", controller.GetCustomerByID)
 	groupRouter.PUT("/:id", middleware.InputValidator(&dto.UpdateCustomerInput{}), controller.UpdateCustomer)
+
+	// only admin can delete customer
 	groupRouter.DELETE("/:id", controller.DeleteCustomer)
 	groupRouter.GET("/", controller.ListCustomers)
+
+	groupRouter.PUT("/deactivate-customer/:id", controller.DeactivateCustomer)
+
 }

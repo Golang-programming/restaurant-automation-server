@@ -50,7 +50,7 @@ func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
 	return db, nil
 }
 
-func ConnectToDatabase() {
+func init() {
 	tenantList := []struct {
 		TenantID string
 		DSN      string

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.co/golang-programming/restaurant/api/customer/dto"
 	"github.co/golang-programming/restaurant/api/customer/service"
@@ -21,35 +22,40 @@ func CreateCustomer(ctx *gin.Context) {
 }
 
 func GetCustomerByID(ctx *gin.Context) {
-	id := ctx.Param("id")
-	customer, err := service.GetCustomerByID(id)
+	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
+
+	customer, err := service.GetCustomerByID(uint(id))
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
+
 	ctx.JSON(http.StatusOK, customer)
 }
 
 func UpdateCustomer(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	val, _ := ctx.Get("validatedInput")
 	input := val.(*dto.UpdateCustomerInput)
 
-	customer, err := service.UpdateCustomer(id, input)
+	customer, err := service.UpdateCustomer(uint(id), input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	ctx.JSON(http.StatusOK, customer)
 }
 
 func DeleteCustomer(ctx *gin.Context) {
-	id := ctx.Param("id")
-	err := service.DeleteCustomer(id)
+	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
+
+	err := service.DeleteCustomer(uint(id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	ctx.JSON(http.StatusNoContent, nil)
 }
 
@@ -59,5 +65,18 @@ func ListCustomers(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	ctx.JSON(http.StatusOK, customers)
+}
+
+func DeactivateCustomer(ctx *gin.Context) {
+	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
+
+	err := service.RemoveCustomerFromActiveList(uint(id))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"message": "Customer deactivated successfully"})
 }

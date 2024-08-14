@@ -9,7 +9,7 @@ func CreateCustomer(customer *entity.Customer) error {
 	return database.ActiveDB.Create(customer).Error
 }
 
-func GetCustomerByID(id string) (*entity.Customer, error) {
+func GetCustomerByID(id uint) (*entity.Customer, error) {
 	var customer entity.Customer
 	if err := database.ActiveDB.First(&customer, id).Error; err != nil {
 		return nil, err

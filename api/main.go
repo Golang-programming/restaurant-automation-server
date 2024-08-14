@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.co/golang-programming/restaurant/api/database"
 	"github.co/golang-programming/restaurant/api/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -23,8 +22,6 @@ func main() {
 	v1.Use(middleware.TenantMiddleware())
 
 	RegisterRoutes(v1)
-
-	database.ConnectToDatabase()
 
 	fmt.Println("App running on port: ", PORT)
 	app.Run(":" + PORT)
