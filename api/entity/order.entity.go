@@ -24,11 +24,9 @@ const (
 
 type Order struct {
 	gorm.Model
-	Status     OrderStatus `gorm:"type:enum('pending','confirmed','cancelled','making','placed','billing','complete','failed')"`
+	Status     OrderStatus `gorm:"type:enum('pending','confirmed','cancelled','making','placed','billing','complete','failed'); not null; default:"`
 	TableID    uint        `gorm:"not null"`
 	CustomerID uint        `gorm:"not null"`
-	UserID     uint        `gorm:"not null"` // The user who created the order
-	User       *User       `gorm:"foreignKey:UserID"`
 	Table      *Table      `gorm:"foreignKey:TableID"`
 	Customer   *Customer   `gorm:"foreignKey:CustomerID"`
 	OrderItems []OrderItem `gorm:"foreignKey:OrderID"`
@@ -36,11 +34,11 @@ type Order struct {
 
 type OrderItem struct {
 	gorm.Model
-	FoodID   uint   `gorm:"not null"`
-	Food     *Food  `gorm:"foreignKey:FoodID"`
-	OrderID  uint   `gorm:"not null"`
-	Order    *Order `gorm:"foreignKey:OrderID"`
-	Quantity int    `gorm:"type:int;not null"`
-	Status   string `gorm:"type:enum('ordering','making','placed');not null;default:'ordering'"`
-	Notes    []Note `gorm:"foreignKey:OrderItemID"` // One-to-many with Notes
+	FoodID   uint            `gorm:"not null"`
+	Food     *Food           `gorm:"foreignKey:FoodID"`
+	OrderID  uint            `gorm:"not null"`
+	Order    *Order          `gorm:"foreignKey:OrderID"`
+	Quantity int             `gorm:"type:int;not null"`
+	Status   OrderItemStatus `gorm:"type:enum('ordering','making','placed');not null;default:'ordering'"`
+	Notes    []Note          `gorm:"foreignKey:OrderItemID"`
 }

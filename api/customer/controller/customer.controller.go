@@ -9,12 +9,10 @@ import (
 )
 
 func CreateCustomer(ctx *gin.Context) {
-	var input dto.CreateCustomerInput
-	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	customer, err := service.CreateCustomer(&input)
+	val, _ := ctx.Get("validatedInput")
+	input := val.(*dto.CreateCustomerInput)
+
+	customer, err := service.CreateCustomer(input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -34,12 +32,10 @@ func GetCustomerByID(ctx *gin.Context) {
 
 func UpdateCustomer(ctx *gin.Context) {
 	id := ctx.Param("id")
-	var input dto.UpdateCustomerInput
-	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	customer, err := service.UpdateCustomer(id, &input)
+	val, _ := ctx.Get("validatedInput")
+	input := val.(*dto.UpdateCustomerInput)
+
+	customer, err := service.UpdateCustomer(id, input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
