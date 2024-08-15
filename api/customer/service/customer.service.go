@@ -20,7 +20,7 @@ func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 		return "", err
 	}
 
-	utils.AddCustomerToActiveList(customer.ID, customer)
+	utils.SetCustomerStatus(customer.ID, entity.CustomerActive)
 	return commonUtils.Encryptor(fmt.Sprint(customer.ID))
 }
 
@@ -56,5 +56,5 @@ func ListCustomers() ([]*entity.Customer, error) {
 }
 
 func RemoveCustomerFromActiveList(id uint) error {
-	return utils.RemoveCustomerFromActiveList(id)
+	return utils.SetCustomerStatus(id, entity.CustomerInactive)
 }

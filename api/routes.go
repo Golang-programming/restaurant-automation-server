@@ -3,6 +3,8 @@ package main
 import (
 	"github.co/golang-programming/restaurant/api/customer"
 	"github.co/golang-programming/restaurant/api/menu"
+	"github.co/golang-programming/restaurant/api/order"
+	"github.co/golang-programming/restaurant/api/table"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,4 +17,6 @@ func RegisterRoutes(router *gin.RouterGroup) {
 
 	menu.RegisterRoutes(router)
 	customer.RegisterRoutes(router)
+	order.RegisterRoutes(router)
+	table.RegisterRoutes(router)
 }

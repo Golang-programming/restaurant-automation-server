@@ -1,0 +1,82 @@
+# Root directory where `air` will start looking for files
+root = "."
+
+# Directory for test data
+testdata_dir = "testdata"
+
+# Directory for temporary build files
+tmp_dir = "tmp"
+
+[build]
+  # Command to build the Go application
+  cmd = "go build -o ./tmp/main ./api"
+  
+  # Path to the binary
+  bin = "./tmp/main"
+  
+  # Delay in milliseconds before rebuilding after a change
+  delay = 1000
+  
+  # Directories to exclude from watching
+  exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+  
+  # File patterns to exclude from watching
+  exclude_file = []
+  
+  # Regex patterns to exclude files from watching
+  exclude_regex = ["_test.go"]
+  
+  # Exclude files that haven't changed
+  exclude_unchanged = false
+  
+  # Follow symlinks in watched directories
+  follow_symlink = false
+  
+  # Additional command to run after the build (empty here)
+  post_cmd = []
+  
+  # Additional command to run before the build (empty here)
+  pre_cmd = []
+  
+  # Delay before re-running the command after changes
+  rerun_delay = 500
+  
+  # Log file for build errors
+  log = "build-errors.log"
+  
+  # Whether to poll for file changes
+  poll = false
+  
+  # Interval for polling (not used here)
+  poll_interval = 0
+  
+  # Stop the application on build errors
+  stop_on_error = false
+
+[color]
+  # Color configuration for different parts of the `air` output
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+[log]
+  # Log configuration
+  main_only = false
+  time = false
+
+[misc]
+  # Miscellaneous options
+  clean_on_exit = false
+
+[proxy]
+  # Proxy settings (if used)
+  app_port = 0
+  enabled = false
+  proxy_port = 0
+
+[screen]
+  # Screen options
+  clear_on_rebuild = false
+  keep_scroll = true

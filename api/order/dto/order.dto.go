@@ -12,7 +12,7 @@ type UpdateOrderStatusInput struct {
 }
 
 type AddOrderItemInput struct {
-	ProductID   uint                        `json:"food_id" validate:"required"`
+	ProductID   uint                        `json:"product_id" validate:"required"`
 	ProductType entity.OrderItemProductType `json:"status" validate:"omitempty,oneof='food', 'deal'"`
 	Quantity    int                         `json:"quantity" validate:"required,min=1"`
 }

@@ -23,7 +23,7 @@ func CreateOrder(ctx *gin.Context) {
 }
 
 func GetOrderByID(ctx *gin.Context) {
-	orderID, _ := strconv.Atoi(ctx.Param("order_id"))
+	orderID, _ := strconv.Atoi(ctx.Param("id"))
 
 	order, err := service.GetOrderDetailsByID(uint(orderID))
 	if err != nil {
@@ -36,7 +36,7 @@ func GetOrderByID(ctx *gin.Context) {
 
 func UpdateOrderStatus(ctx *gin.Context) {
 	val, _ := ctx.Get("validatedInput")
-	orderID, _ := strconv.Atoi(ctx.Param("order_id"))
+	orderID, _ := strconv.Atoi(ctx.Param("id"))
 	input := val.(*dto.UpdateOrderStatusInput)
 
 	order, err := service.UpdateOrderStatus(uint(orderID), input)
@@ -49,7 +49,7 @@ func UpdateOrderStatus(ctx *gin.Context) {
 }
 
 func DeleteOrder(ctx *gin.Context) {
-	orderID, _ := strconv.Atoi(ctx.Param("order_id"))
+	orderID, _ := strconv.Atoi(ctx.Param("id"))
 
 	if err := service.DeleteOrder(uint(orderID)); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -70,7 +70,7 @@ func ListOrders(ctx *gin.Context) {
 }
 
 func AddOrderItem(ctx *gin.Context) {
-	orderID, _ := strconv.Atoi(ctx.Param("order_id"))
+	orderID, _ := strconv.Atoi(ctx.Param("id"))
 	val, _ := ctx.Get("validatedInput")
 	input := val.(*dto.AddOrderItemInput)
 
@@ -84,7 +84,7 @@ func AddOrderItem(ctx *gin.Context) {
 }
 
 func UpdateOrderItemStatus(ctx *gin.Context) {
-	orderID, _ := strconv.Atoi(ctx.Param("order_id"))
+	orderID, _ := strconv.Atoi(ctx.Param("id"))
 	itemID, _ := strconv.Atoi(ctx.Param("item_id"))
 	val, _ := ctx.Get("validatedInput")
 	input := val.(*dto.UpdateOrderItemStatusInput)
@@ -99,7 +99,7 @@ func UpdateOrderItemStatus(ctx *gin.Context) {
 }
 
 func RemoveOrderItem(ctx *gin.Context) {
-	orderID, _ := strconv.Atoi(ctx.Param("order_id"))
+	orderID, _ := strconv.Atoi(ctx.Param("id"))
 	itemID, _ := strconv.Atoi(ctx.Param("item_id"))
 
 	if err := service.RemoveOrderItem(uint(orderID), uint(itemID)); err != nil {

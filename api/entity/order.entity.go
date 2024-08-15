@@ -33,10 +33,8 @@ type Order struct {
 	Status     OrderStatus `gorm:"type:enum('pending','confirmed','cancelled','making','placed','billing','complete','failed'); not null; default:"`
 	TableID    uint        `gorm:"not null"`
 	CustomerID uint        `gorm:"not null"`
-	DealID     *uint       `gorm:"null"`
 	Table      *Table      `gorm:"foreignKey:TableID"`
 	Customer   *Customer   `gorm:"foreignKey:CustomerID"`
-	Deal       *Deal       `gorm:"foreignKey:DealID"`
 	OrderItems []OrderItem `gorm:"foreignKey:OrderID"`
 }
 

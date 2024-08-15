@@ -14,6 +14,6 @@ const (
 type Table struct {
 	gorm.Model
 	Number int         `gorm:"type:int;not null;unique"`
-	Status TableStatus `gorm:"type:enum('observed', 'available');not null"`
+	Status TableStatus `gorm:"type:enum('observed', 'available');not null;default:available"`
 	Orders []Order     `gorm:"foreignKey:TableID"` // One-to-many relationship with Order
 }
