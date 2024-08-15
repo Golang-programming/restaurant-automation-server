@@ -2,19 +2,22 @@ package redis
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 
 	"github.com/go-redis/redis/v8"
 )
 
-var redisClient *redis.Client
-var ctx = context.Background()
+var (
+	redisClient *redis.Client
+	ctx         context.Context
+)
 
 func init() {
+	ctx = context.Background()
+
 	redisClient = redis.NewClient(&redis.Options{
-		Addr: "localhost:6379", // Update this with your Redis server address
-		DB:   0,                // Default DB
+		Addr: "localhost:6379",
+		DB:   0,
 	})
 
 	_, err := redisClient.Ping(ctx).Result()
@@ -23,28 +26,30 @@ func init() {
 	}
 }
 
-// SaveToRedis saves data to Redis with the specified key
-func SaveToRedis(key string, value interface{}) error {
-	data, err := json.Marshal(value)
-	if err != nil {
-		return err
-	}
-	return redisClient.Set(ctx, key, data, 0).Err()
+func GetRedisClient() *redis.Client {
+	return redisClient
 }
 
-// GetFromRedis retrieves data from Redis by key
-func GetFromRedis(key string, dest interface{}) error {
-	val, err := redisClient.Get(ctx, key).Result()
-	if err != nil {
-		if err == redis.Nil {
-			return nil
-		}
-		return err
-	}
-	return json.Unmarshal([]byte(val), dest)
+func Set(key string, value interface{}) error {
+	return redisClient.Set(ctx, key, value, 0).Err()
 }
 
-// DeleteFromRedis removes a key from Redis
-func DeleteFromRedis(key string) error {
-	return redisClient.Del(ctx, key).Err()
+func Get(key string) (string, error) {
+	return redisClient.Get(ctx, key).Result()
+}
+
+func HSet(key string, fields map[string]interface{}) error {
+	return redisClient.HSet(ctx, key, fields).Err()
+}
+
+func SAdd(key string, members ...interface{}) error {
+	return redisClient.SAdd(ctx, key, members...).Err()
+}
+
+func SRem(key string, members ...interface{}) error {
+	return redisClient.SRem(ctx, key, members...).Err()
+}
+
+func SMembers(key string) ([]string, error) {
+	return redisClient.SMembers(ctx, key).Result()
 }
