@@ -12,8 +12,9 @@ type UpdateOrderStatusInput struct {
 }
 
 type AddOrderItemInput struct {
-	FoodID   uint `json:"food_id" validate:"required"`
-	Quantity int  `json:"quantity" validate:"required,min=1"`
+	ProductID   uint                        `json:"food_id" validate:"required"`
+	ProductType entity.OrderItemProductType `json:"status" validate:"omitempty,oneof='food', 'deal'"`
+	Quantity    int                         `json:"quantity" validate:"required,min=1"`
 }
 
 type UpdateOrderItemStatusInput struct {
@@ -29,10 +30,10 @@ type OrderResponse struct {
 }
 
 type OrderItemResponse struct {
-	ID       uint                   `json:"id"`
-	FoodID   uint                   `json:"food_id"`
-	Quantity int                    `json:"quantity"`
-	Status   entity.OrderItemStatus `json:"status"`
+	ID        uint                   `json:"id"`
+	ProductID uint                   `json:"food_id"`
+	Quantity  int                    `json:"quantity"`
+	Status    entity.OrderItemStatus `json:"status"`
 }
 
 type OrderListResponse struct {

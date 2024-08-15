@@ -57,10 +57,11 @@ func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem
 	}
 
 	orderItem := &entity.OrderItem{
-		FoodID:   input.FoodID,
-		OrderID:  orderID,
-		Quantity: input.Quantity,
-		Status:   entity.OrderItemOrdering,
+		ProductID:   input.ProductID,
+		ProductType: input.ProductType,
+		OrderID:     orderID,
+		Quantity:    input.Quantity,
+		Status:      entity.OrderItemOrdering,
 	}
 
 	if err := repository.AddOrderItem(orderItem); err != nil {
