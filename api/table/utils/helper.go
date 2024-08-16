@@ -10,12 +10,12 @@ import (
 const availableTablesKey = "tables:availables"
 const observedTablesKey = "tables:observed"
 
-func MakeTableAvailable(tableID uint) error {
+func MarkTableAvailable(tableID uint) error {
 	redis.SRem(observedTablesKey, tableID)
 	return redis.SAdd(availableTablesKey, tableID)
 }
 
-func MakeTableObserved(tableID uint) error {
+func MarkTableObserved(tableID uint) error {
 	redis.SRem(availableTablesKey, tableID)
 	return redis.SAdd(observedTablesKey, tableID)
 }
