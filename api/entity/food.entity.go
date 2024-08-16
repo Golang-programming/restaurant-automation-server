@@ -16,7 +16,7 @@ type Food struct {
 	Description  string     `gorm:"type:text; not null"`
 	Images       []string   `gorm:"type:json"`
 	Status       FoodStatus `gorm:"type:enum('active', 'inactive'); not null"`
-	ParentFoodID *uint      `gorm:"index"` // For self-referencing parent food
+	ParentFoodID *uint      `gorm:"index"`
 	ParentFood   *Food      `gorm:"foreignKey:ParentFoodID"`
 	MenuID       uint       `gorm:"not null"`
 	Menu         *Menu      `gorm:"foreignKey:MenuID"`

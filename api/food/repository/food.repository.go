@@ -1,16 +1,34 @@
 package repository
 
 import (
+	"github.co/golang-programming/restaurant/api/database"
 	"github.co/golang-programming/restaurant/api/entity"
-	"gorm.io/gorm"
 )
 
-var db *gorm.DB // This should be initialized in your main application
+func CreateFood(food *entity.Food) error {
+	return database.ActiveDB.Create(food).Error
+}
 
 func GetFoodByID(id uint) (*entity.Food, error) {
 	var food entity.Food
-	if err := db.First(&food, id).Error; err != nil {
+	if err := database.ActiveDB.First(&food, id).Error; err != nil {
 		return nil, err
 	}
 	return &food, nil
+}
+
+func UpdateFood(food *entity.Food) error {
+	return database.ActiveDB.Save(food).Error
+}
+
+func DeleteFood(food *entity.Food) error {
+	return database.ActiveDB.Delete(food).Error
+}
+
+func ListFoods() ([]*entity.Food, error) {
+	var foods []*entity.Food
+	if err := database.ActiveDB.Find(&foods).Error; err != nil {
+		return nil, err
+	}
+	return foods, nil
 }

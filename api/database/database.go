@@ -37,7 +37,6 @@ func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
 		&entity.Note{},
 		&entity.Order{},
 		&entity.OrderItem{},
-		&entity.Reservation{},
 		&entity.Table{},
 		&entity.User{},
 	)
@@ -55,8 +54,8 @@ func init() {
 		TenantID string
 		DSN      string
 	}{
-		{"tenant1", "root:@tcp(127.0.0.1:3306)/restaurant_1?charset=utf8mb4&parseTime=True&loc=Local"},
-		{"tenant2", "root:@tcp(127.0.0.1:3306)/restaurant_2?charset=utf8mb4&parseTime=True&loc=Local"},
+		{"tenant1", "root:password@tcp(127.0.0.1:3307)/restaurant_1?charset=utf8mb4&parseTime=True&loc=Local"},
+		{"tenant2", "root:password@tcp(127.0.0.1:3307)/restaurant_2?charset=utf8mb4&parseTime=True&loc=Local"},
 	}
 
 	for _, tenant := range tenantList {

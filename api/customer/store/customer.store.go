@@ -78,3 +78,18 @@ func GetAllCustomers() ([]*Customer, error) {
 
 	return customers, nil
 }
+
+func DeactivateCustomer(id uint) error {
+	customer, err := GetCustomer(id)
+	if err != nil {
+		return err
+	}
+
+	customer.Status = enum.CustomerInactive
+	return Save(customer)
+}
+
+func DeleteCustomer(id uint) error {
+	key := fmt.Sprintf("customer:%d", id)
+	return redis.Del(key)
+}

@@ -2,7 +2,6 @@ package redis
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"time"
 
@@ -14,13 +13,11 @@ var ctx = context.Background()
 var Client *redis.Client
 
 func init() {
-	fmt.Println("——————————————————————————————————————-")
 
 	Client = redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
 		DB:   1,
 	})
-	fmt.Println("€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€-")
 
 	_, err := Client.Ping(ctx).Result()
 	if err != nil {
@@ -34,6 +31,10 @@ func GetRedisClient() *redis.Client {
 
 func Set(key string, value interface{}, ttl time.Duration) error {
 	return Client.Set(ctx, key, value, ttl).Err()
+}
+
+func Del(key string) error {
+	return Client.Del(ctx, key).Err()
 }
 
 func Get(key string) (string, error) {
@@ -58,4 +59,16 @@ func SMembers(key string) ([]string, error) {
 
 func Keys(pattern string) ([]string, error) {
 	return Client.Keys(context.Background(), pattern).Result()
+}
+
+func Increment(key string) (int64, error) {
+	return Client.Incr(ctx, key).Result()
+}
+
+func TTL(key string) (time.Duration, error) {
+	return Client.TTL(ctx, key).Result()
+}
+
+func SetExpiration(key string, ttl time.Duration) error {
+	return Client.Expire(ctx, key, ttl).Err()
 }

@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"fmt"
 	"time"
 
@@ -60,7 +59,7 @@ func ListCustomers() ([]*entity.Customer, error) {
 }
 
 func DeactivateCustomerInRedis(customerID uint) error {
-	return errors.New("utils.RemoveActiveUser(id)")
+	return store.DeactivateCustomer(customerID)
 }
 
 func storeCustomerInRedis(input *dto.CreateCustomerInput, customerID uint) {
