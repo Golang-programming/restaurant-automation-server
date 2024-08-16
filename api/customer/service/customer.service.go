@@ -24,18 +24,8 @@ func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 		return "", err
 	}
 
-	createCustomerHelper(input, customer.ID)
+	storeCustomerInRedis(input, customer.ID)
 	return utils.Encryptor(fmt.Sprint(customer.ID))
-}
-
-func createCustomerHelper(input *dto.CreateCustomerInput, customerID uint) {
-	customer := &store.Customer{
-		ID:        customerID,
-		Status:    enum.CustomerActive,
-		TableID:   input.TableID,
-		StartTime: time.Now(),
-	}
-	store.Save(customer)
 }
 
 func GetCustomerByID(id uint) (*entity.Customer, error) {
@@ -69,6 +59,16 @@ func ListCustomers() ([]*entity.Customer, error) {
 	return repository.ListCustomers()
 }
 
-func RemoveCustomerFromActiveList(id uint) error {
+func DeactivateCustomerInRedis(customerID uint) error {
 	return errors.New("utils.RemoveActiveUser(id)")
+}
+
+func storeCustomerInRedis(input *dto.CreateCustomerInput, customerID uint) {
+	customer := &store.Customer{
+		ID:        customerID,
+		Status:    enum.CustomerActive,
+		TableID:   input.TableID,
+		StartTime: time.Now(),
+	}
+	store.Save(customer)
 }
