@@ -3,8 +3,10 @@ package service
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.co/golang-programming/restaurant/api/customer/dto"
+	"github.co/golang-programming/restaurant/api/customer/enum"
 	"github.co/golang-programming/restaurant/api/customer/repository"
 	"github.co/golang-programming/restaurant/api/customer/store"
 	"github.co/golang-programming/restaurant/api/entity"
@@ -15,25 +17,25 @@ func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 	customer := &entity.Customer{
 		TotalGuests: input.TotalGuests,
 		Name:        input.Name,
+		TableID:     input.TableID,
+		StartDate:   time.Now(),
 	}
 	if err := repository.CreateCustomer(customer); err != nil {
 		return "", err
 	}
 
-	// utils.Customer.
-	createCustomerHelper()
+	createCustomerHelper(input, customer.ID)
 	return utils.Encryptor(fmt.Sprint(customer.ID))
 }
 
-func createCustomerHelper() {
+func createCustomerHelper(input *dto.CreateCustomerInput, customerID uint) {
 	customer := &store.Customer{
-		ID:             1,
-		Status:         "active",
-		TotalGuests:    4,
-		TableID:        10,
-		CurrentOrderID: 123,
+		ID:        customerID,
+		Status:    enum.CustomerActive,
+		TableID:   input.TableID,
+		StartTime: time.Now(),
 	}
-	customer.Save()
+	store.Save(customer)
 }
 
 func GetCustomerByID(id uint) (*entity.Customer, error) {

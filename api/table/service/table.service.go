@@ -10,7 +10,6 @@ import (
 func CreateTable(input *dto.CreateTableInput) (*entity.Table, error) {
 	table := &entity.Table{
 		Number: input.Number,
-		Status: input.Status,
 	}
 	if err := repository.CreateTable(table); err != nil {
 		return nil, err
@@ -35,7 +34,6 @@ func UpdateTable(id uint, input *dto.UpdateTableInput) (*entity.Table, error) {
 	}
 
 	table.Number = input.Number
-	table.Status = input.Status
 	if err := repository.UpdateTable(table); err != nil {
 		return nil, err
 	}

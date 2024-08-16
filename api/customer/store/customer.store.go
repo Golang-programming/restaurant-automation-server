@@ -3,37 +3,43 @@ package store
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
+	"github.co/golang-programming/restaurant/api/customer/enum"
 	"github.co/golang-programming/restaurant/api/redis"
+	"github.co/golang-programming/restaurant/api/utils"
 )
 
 type Customer struct {
-	ID             uint   `json:"id"`
-	Status         string `json:"status"`
-	TotalGuests    int    `json:"total_guests"`
-	TableID        uint   `json:"table_id"`
-	CurrentOrderID uint   `json:"current_order_id"`
+	ID        uint                `json:"id"`
+	Status    enum.CustomerStatus `json:"status"`
+	StartTime time.Time           `json:"start_time"`
+	EndTime   time.Time           `json:"end_time"`
+	TableID   uint                `json:"table_id"`
 }
 
-func (c *Customer) Serialize() (string, error) {
-	bytes, err := json.Marshal(c)
+func Serialize(customer *Customer) (string, error) {
+	bytes, err := json.Marshal(customer)
 	if err != nil {
 		return "", err
 	}
 	return string(bytes), nil
 }
 
-func (c *Customer) Deserialize(data string) error {
-	return json.Unmarshal([]byte(data), c)
+func Deserialize(customer *Customer, data string) error {
+	return json.Unmarshal([]byte(data), customer)
 }
 
-func (c *Customer) Save() error {
-	key := fmt.Sprintf("customer:%d", c.ID)
-	data, err := c.Serialize()
+func Save(customer *Customer) error {
+	key := fmt.Sprintf("customer:%d", customer.ID)
+	data, err := Serialize(customer)
 	if err != nil {
 		return err
 	}
-	return redis.Set(key, data)
+
+	expiration := utils.CalculateSecondsUntilMidnight()
+
+	return redis.Set(key, data, time.Duration(expiration)*time.Second)
 }
 
 func GetCustomer(id uint) (*Customer, error) {
@@ -42,9 +48,33 @@ func GetCustomer(id uint) (*Customer, error) {
 	if err != nil {
 		return nil, err
 	}
-	c := &Customer{}
-	if err := c.Deserialize(data); err != nil {
+
+	customer := &Customer{}
+	if err := Deserialize(customer, data); err != nil {
 		return nil, err
 	}
-	return c, nil
+	return customer, nil
+}
+
+func GetAllCustomers() ([]*Customer, error) {
+	pattern := "customer:*"
+	keys, err := redis.Keys(pattern)
+	if err != nil {
+		return nil, err
+	}
+
+	var customers []*Customer
+	for _, key := range keys {
+		data, err := redis.Get(key)
+		if err != nil {
+			return nil, err
+		}
+		customer := &Customer{}
+		if err := Deserialize(customer, data); err != nil {
+			return nil, err
+		}
+		customers = append(customers, customer)
+	}
+
+	return customers, nil
 }
