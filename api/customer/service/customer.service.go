@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 
 	"github.co/golang-programming/restaurant/api/customer/dto"
@@ -20,8 +21,21 @@ func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 		return "", err
 	}
 
-	utils.AddActiveUser(customer.ID)
+	// utils.Customer.
+	createCustomerHelper()
 	return commonUtils.Encryptor(fmt.Sprint(customer.ID))
+}
+
+func createCustomerHelper() {
+	customer := &utils.Customer{
+		ID:             1,
+		Name:           "John Doe",
+		Status:         "active",
+		TotalGuests:    4,
+		TableID:        10,
+		CurrentOrderID: 123,
+	}
+	customer.Save()
 }
 
 func GetCustomerByID(id uint) (*entity.Customer, error) {
@@ -56,5 +70,5 @@ func ListCustomers() ([]*entity.Customer, error) {
 }
 
 func RemoveCustomerFromActiveList(id uint) error {
-	return utils.RemoveActiveUser(id)
+	return errors.New("utils.RemoveActiveUser(id)")
 }
