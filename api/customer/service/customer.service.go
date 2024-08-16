@@ -6,10 +6,9 @@ import (
 
 	"github.co/golang-programming/restaurant/api/customer/dto"
 	"github.co/golang-programming/restaurant/api/customer/repository"
-	"github.co/golang-programming/restaurant/api/customer/utils"
+	"github.co/golang-programming/restaurant/api/customer/store"
 	"github.co/golang-programming/restaurant/api/entity"
-
-	commonUtils "github.co/golang-programming/restaurant/api/utils/encryption"
+	utils "github.co/golang-programming/restaurant/api/utils/encryption"
 )
 
 func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
@@ -23,13 +22,12 @@ func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 
 	// utils.Customer.
 	createCustomerHelper()
-	return commonUtils.Encryptor(fmt.Sprint(customer.ID))
+	return utils.Encryptor(fmt.Sprint(customer.ID))
 }
 
 func createCustomerHelper() {
-	customer := &utils.Customer{
+	customer := &store.Customer{
 		ID:             1,
-		Name:           "John Doe",
 		Status:         "active",
 		TotalGuests:    4,
 		TableID:        10,
