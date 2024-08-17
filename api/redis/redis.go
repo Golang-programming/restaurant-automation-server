@@ -16,7 +16,7 @@ func init() {
 
 	Client = redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
-		DB:   1,
+		DB:   0,
 	})
 
 	_, err := Client.Ping(ctx).Result()
