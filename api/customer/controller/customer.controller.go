@@ -73,7 +73,7 @@ func DeactivateCustomer(ctx *gin.Context) {
 	val, _ := ctx.Get("currentCustomerID")
 	id, _ := strconv.ParseUint(val.(string), 10, 32)
 
-	err := service.DeactivateCustomerInRedis(uint(id))
+	err := service.DeactivateCustomer(uint(id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

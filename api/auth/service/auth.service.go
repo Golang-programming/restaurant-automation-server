@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"github.co/golang-programming/restaurant/api/auth/dto"
+	"github.co/golang-programming/restaurant/api/entity"
 	"github.co/golang-programming/restaurant/api/redis"
+	userService "github.co/golang-programming/restaurant/api/user/service"
 )
 
 const (
@@ -38,7 +40,7 @@ func SendOTP(input *dto.SendOTPInput) error {
 	return nil
 }
 
-func VerifyOTP(input *dto.VerifyOTPInput) error {
+func ValidateOTP(input *dto.ValidateOTPInput) error {
 	phoneKey := fmt.Sprintf("otp:%s", input.PhoneNumber)
 
 	storedOTP, err := redis.Get(phoneKey)
@@ -57,6 +59,16 @@ func VerifyOTP(input *dto.VerifyOTPInput) error {
 	return nil
 }
 
+func LoginUser(phoneNumber string) (*entity.User, string, string, error) {
+	user, err := userService.GetUserByPhoneNumber(phoneNumber)
+	if err != nil {
+		return nil, "", "", err
+	}
+
+	accessToken, refreshToken, err := AssignToken(string(user.ID), user.PhoneNumber)
+	return user, accessToken, refreshToken, err
+}
+
 func isBlocked(reqKey string) bool {
 	ttl, err := redis.TTL(reqKey)
 	return err == nil && ttl > 0
@@ -68,12 +80,8 @@ func incrementRequestCount(reqKey string) error {
 		return err
 	}
 
-	if count == 1 {
+	if count == 4 {
 		return redis.SetExpiration(reqKey, blockTime)
-	}
-
-	if count > requestLimit {
-		return errors.New("too many requests, please try again later")
 	}
 
 	return nil

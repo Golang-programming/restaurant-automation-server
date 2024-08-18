@@ -10,5 +10,5 @@ import (
 func RegisterRoutes(router *gin.RouterGroup) {
 	groupRouter := router.Group("/auth")
 	groupRouter.POST("/send", middleware.InputValidator(&dto.SendOTPInput{}), controller.SendOTP)
-	groupRouter.POST("/verify", middleware.InputValidator(&dto.VerifyOTPInput{}), controller.VerifyOTP)
+	groupRouter.POST("/velidate", middleware.InputValidator(&dto.ValidateOTPInput{}), controller.ValidateOTP)
 }

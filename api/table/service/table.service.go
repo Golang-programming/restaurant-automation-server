@@ -4,7 +4,6 @@ import (
 	"github.co/golang-programming/restaurant/api/entity"
 	"github.co/golang-programming/restaurant/api/table/dto"
 	"github.co/golang-programming/restaurant/api/table/repository"
-	"github.co/golang-programming/restaurant/api/table/utils"
 )
 
 func CreateTable(input *dto.CreateTableInput) (*entity.Table, error) {
@@ -15,7 +14,6 @@ func CreateTable(input *dto.CreateTableInput) (*entity.Table, error) {
 		return nil, err
 	}
 
-	utils.MarkTableAvailable(table.ID)
 	return table, nil
 }
 
@@ -24,7 +22,17 @@ func GetTableByID(id uint) (*entity.Table, error) {
 }
 
 func MarkTableObserved(id uint) error {
-	return utils.MarkTableObserved(id)
+	table, err := repository.GetTableByID(id)
+	if err != nil {
+		return err
+	}
+
+	table.Status = entity.TableObserved
+	if err := repository.UpdateTable(table); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func UpdateTable(id uint, input *dto.UpdateTableInput) (*entity.Table, error) {

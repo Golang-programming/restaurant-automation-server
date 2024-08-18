@@ -19,18 +19,25 @@ func SendOTP(ctx *gin.Context) {
 		return
 	}
 
+	ctx.JSON(http.StatusOK, gin.H{"success": true, "message": "opt sent to youru phone number"})
 }
 
-func VerifyOTP(ctx *gin.Context) {
+func ValidateOTP(ctx *gin.Context) {
 	val, _ := ctx.Get("validatedInput")
-	input := val.(*dto.VerifyOTPInput)
+	input := val.(*dto.ValidateOTPInput)
 
-	err := service.VerifyOTP(input)
+	err := service.ValidateOTP(input)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"success": true})
+	accessToken, refreshToken, user, err := service.LoginUser(input.PhoneNumber)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"accessToken": accessToken, "refreshToken": refreshToken, "user": user})
 }

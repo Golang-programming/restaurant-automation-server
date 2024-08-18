@@ -18,7 +18,7 @@ type Bill struct {
 	Discount     float64    `gorm:"type:decimal(10,2); not null; default:0"`
 	Total        float64    `gorm:"type:decimal(10,2); not null"`
 	Paid         float64    `gorm:"type:decimal(10,2); not null; default:0"`
-	Status       BillStatus `gorm:"type:enum('pending','paid', 'refunded'); not null; default:'pending'"`
+	Status       BillStatus `gorm:"type:bill_status; not null; default:'pending'"`
 	ParentBillID *uint      `gorm:"index"`
 	ParentBill   *Bill      `gorm:"foreignKey:ParentBillID"`
 	OrderID      uint       `gorm:"not null"`

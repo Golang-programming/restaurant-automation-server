@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.co/golang-programming/restaurant/api/entity"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -20,7 +20,7 @@ var tenants = make(map[string]*TenantConfig)
 
 func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
 	fmt.Println("tenantID, dsn", tenantID, dsn)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
@@ -54,8 +54,9 @@ func init() {
 		TenantID string
 		DSN      string
 	}{
-		{"tenant1", "root:password@tcp(127.0.0.1:3307)/restaurant_1?charset=utf8mb4&parseTime=True&loc=Local"},
-		{"tenant2", "root:password@tcp(127.0.0.1:3307)/restaurant_2?charset=utf8mb4&parseTime=True&loc=Local"},
+		// Update DSNs to match PostgreSQL format: "host=<hostname> user=<username> password=<password> dbname=<dbname> port=<port> sslmode=<mode>"
+		{"tenant1", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable"},
+		{"tenant2", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable"},
 	}
 
 	for _, tenant := range tenantList {

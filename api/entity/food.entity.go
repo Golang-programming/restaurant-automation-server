@@ -15,7 +15,7 @@ type Food struct {
 	Price        float64    `gorm:"type:decimal(10,2); not null"`
 	Description  string     `gorm:"type:text; not null"`
 	Images       []string   `gorm:"type:json"`
-	Status       FoodStatus `gorm:"type:enum('active', 'inactive'); not null"`
+	Status       FoodStatus `gorm:"type:food_status; not null"`
 	ParentFoodID *uint      `gorm:"index"`
 	ParentFood   *Food      `gorm:"foreignKey:ParentFoodID"`
 	MenuID       uint       `gorm:"not null"`

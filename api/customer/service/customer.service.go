@@ -5,9 +5,7 @@ import (
 	"time"
 
 	"github.co/golang-programming/restaurant/api/customer/dto"
-	"github.co/golang-programming/restaurant/api/customer/enum"
 	"github.co/golang-programming/restaurant/api/customer/repository"
-	"github.co/golang-programming/restaurant/api/customer/store"
 	"github.co/golang-programming/restaurant/api/entity"
 	utils "github.co/golang-programming/restaurant/api/utils/encryption"
 )
@@ -17,13 +15,12 @@ func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {
 		TotalGuests: input.TotalGuests,
 		Name:        input.Name,
 		TableID:     input.TableID,
-		StartDate:   time.Now(),
+		StartTime:   time.Now(),
 	}
 	if err := repository.CreateCustomer(customer); err != nil {
 		return "", err
 	}
 
-	storeCustomerInRedis(input, customer.ID)
 	return utils.Encryptor(fmt.Sprint(customer.ID))
 }
 
@@ -58,16 +55,16 @@ func ListCustomers() ([]*entity.Customer, error) {
 	return repository.ListCustomers()
 }
 
-func DeactivateCustomerInRedis(customerID uint) error {
-	return store.DeactivateCustomer(customerID)
-}
-
-func storeCustomerInRedis(input *dto.CreateCustomerInput, customerID uint) {
-	customer := &store.Customer{
-		ID:        customerID,
-		Status:    enum.CustomerActive,
-		TableID:   input.TableID,
-		StartTime: time.Now(),
+func DeactivateCustomer(customerID uint) error {
+	customer, err := repository.GetCustomerByID(customerID)
+	if err != nil {
+		return err
 	}
-	store.Save(customer)
+
+	customer.Status = entity.CustomerActive
+	if err := repository.UpdateCustomer(customer); err != nil {
+		return err
+	}
+
+	return nil
 }
