@@ -33,7 +33,7 @@ func ValidateOTP(ctx *gin.Context) {
 		return
 	}
 
-	accessToken, refreshToken, user, err := service.LoginUser(input.PhoneNumber)
+	accessToken, refreshToken, user, err := service.LoginStaff(input.PhoneNumber)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

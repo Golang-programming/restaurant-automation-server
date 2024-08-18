@@ -17,8 +17,8 @@ var (
 )
 
 type CustomClaims struct {
-	UserID string `json:"user_id"`
-	Email  string `json:"email"`
+	StaffID string `json:"staff_id"`
+	Email   string `json:"email"`
 	jwt.RegisteredClaims
 }
 
@@ -28,8 +28,8 @@ func InitRedisClient() {
 	})
 }
 
-func AssignToken(userID, email string) (string, string, error) {
-	accessTokenStr, refreshTokenStr, err := createTokens(userID, email)
+func AssignToken(staffID, email string) (string, string, error) {
+	accessTokenStr, refreshTokenStr, err := createTokens(staffID, email)
 
 	return accessTokenStr, refreshTokenStr, err
 }
@@ -52,18 +52,18 @@ func RefreshToken(refreshTokenStr string) (string, string, error) {
 		return "", "", err
 	}
 
-	storedRefreshToken, err := redisClient.Get(ctx, "refresh_token:"+claims.UserID).Result()
+	storedRefreshToken, err := redisClient.Get(ctx, "refresh_token:"+claims.StaffID).Result()
 	if err != nil || storedRefreshToken != refreshTokenStr {
 		return "", "", errors.New("invalid refresh token")
 	}
 
-	newAccessTokenStr, newRefreshTokenStr, err := createTokens(claims.UserID, claims.Email)
+	newAccessTokenStr, newRefreshTokenStr, err := createTokens(claims.StaffID, claims.Email)
 
 	return newAccessTokenStr, newRefreshTokenStr, err
 }
 
-func RevokeToken(userID string) error {
-	err := redisClient.Del(ctx, "refresh_token:"+userID).Err()
+func RevokeToken(staffID string) error {
+	err := redisClient.Del(ctx, "refresh_token:"+staffID).Err()
 	if err != nil {
 		return err
 	}
@@ -91,13 +91,13 @@ func decodeToken(tokenStr string) (*CustomClaims, error) {
 	return claims, nil
 }
 
-func createTokens(userID, email string) (string, string, error) {
+func createTokens(staffID, email string) (string, string, error) {
 	expirationTime := time.Now().Add(10 * time.Minute)
 	refreshExpirationTime := time.Now().Add(24 * time.Hour)
 
 	claims := CustomClaims{
-		UserID: userID,
-		Email:  email,
+		StaffID: staffID,
+		Email:   email,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -105,7 +105,7 @@ func createTokens(userID, email string) (string, string, error) {
 	}
 
 	refreshClaims := CustomClaims{
-		UserID: userID,
+		StaffID: staffID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(refreshExpirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -124,7 +124,7 @@ func createTokens(userID, email string) (string, string, error) {
 		return "", "", err
 	}
 
-	err = redisClient.Set(ctx, "refresh_token:"+userID, refreshTokenStr, 24*time.Hour).Err()
+	err = redisClient.Set(ctx, "refresh_token:"+staffID, refreshTokenStr, 24*time.Hour).Err()
 	if err != nil {
 		return "", "", err
 	}

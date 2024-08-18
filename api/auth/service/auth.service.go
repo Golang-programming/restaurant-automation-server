@@ -4,17 +4,18 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.co/golang-programming/restaurant/api/auth/dto"
 	"github.co/golang-programming/restaurant/api/entity"
 	"github.co/golang-programming/restaurant/api/redis"
-	userService "github.co/golang-programming/restaurant/api/user/service"
+	staffService "github.co/golang-programming/restaurant/api/staff/service"
 )
 
 const (
 	otpTTL       = 2 * time.Minute
-	requestLimit = 3
+	requestLimit = 10000
 	blockTime    = 2 * time.Minute
 )
 
@@ -59,8 +60,8 @@ func ValidateOTP(input *dto.ValidateOTPInput) error {
 	return nil
 }
 
-func LoginUser(phoneNumber string) (*entity.User, string, string, error) {
-	user, err := userService.GetUserByPhoneNumber(phoneNumber)
+func LoginStaff(phoneNumber string) (*entity.Staff, string, string, error) {
+	user, err := staffService.GetStaffByPhoneNumber(phoneNumber)
 	if err != nil {
 		return nil, "", "", err
 	}
@@ -80,7 +81,7 @@ func incrementRequestCount(reqKey string) error {
 		return err
 	}
 
-	if count == 4 {
+	if count == requestLimit {
 		return redis.SetExpiration(reqKey, blockTime)
 	}
 
@@ -89,6 +90,9 @@ func incrementRequestCount(reqKey string) error {
 
 func generateOTP() string {
 	// Simple 6-digit OTP generation logic
+	if os.Getenv("ENV") == "dev" {
+		return "000000"
+	}
 	return fmt.Sprintf("%06d", rand.Intn(1000000))
 }
 

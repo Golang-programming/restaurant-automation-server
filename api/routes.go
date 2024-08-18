@@ -5,6 +5,7 @@ import (
 	"github.co/golang-programming/restaurant/api/customer"
 	"github.co/golang-programming/restaurant/api/menu"
 	"github.co/golang-programming/restaurant/api/order"
+	staff "github.co/golang-programming/restaurant/api/staff"
 	"github.co/golang-programming/restaurant/api/table"
 	"github.com/gin-gonic/gin"
 )
@@ -21,4 +22,5 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	order.RegisterRoutes(router)
 	table.RegisterRoutes(router)
 	auth.RegisterRoutes(router)
+	staff.RegisterRoutes(router)
 }

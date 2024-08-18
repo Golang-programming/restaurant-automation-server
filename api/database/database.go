@@ -38,7 +38,7 @@ func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
 		&entity.Order{},
 		&entity.OrderItem{},
 		&entity.Table{},
-		&entity.User{},
+		&entity.Staff{},
 	)
 
 	tenants[tenantID] = &TenantConfig{
@@ -56,7 +56,6 @@ func init() {
 	}{
 		// Update DSNs to match PostgreSQL format: "host=<hostname> user=<username> password=<password> dbname=<dbname> port=<port> sslmode=<mode>"
 		{"tenant1", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable"},
-		{"tenant2", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable"},
 	}
 
 	for _, tenant := range tenantList {
