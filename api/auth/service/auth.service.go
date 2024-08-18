@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	otpTTL       = 2 * time.Minute
+	otpTTL       = 2 * time.Hour
 	requestLimit = 10000
 	blockTime    = 2 * time.Minute
 )
@@ -53,9 +53,9 @@ func ValidateOTP(input *dto.ValidateOTPInput) error {
 		return errors.New("incorrect OTP")
 	}
 
-	if err := redis.Del(phoneKey); err != nil {
-		return err
-	}
+	// if err := redis.Del(phoneKey); err != nil {
+	// 	return err
+	// }
 
 	return nil
 }

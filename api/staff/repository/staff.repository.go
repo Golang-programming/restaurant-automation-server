@@ -7,7 +7,7 @@ import (
 
 func GetStaffByPhoneNumber(phoneNumber string) (*entity.Staff, error) {
 	var staff entity.Staff
-	if err := database.ActiveDB.Where("phone_number = ?", phoneNumber).First(&staff, phoneNumber).Error; err != nil {
+	if err := database.ActiveDB.Where("phone_number = ?", phoneNumber).First(&staff).Error; err != nil {
 		return nil, err
 	}
 
