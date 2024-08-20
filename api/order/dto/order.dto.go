@@ -3,7 +3,6 @@ package dto
 import "github.co/golang-programming/restaurant/api/entity"
 
 type CreateOrderInput struct {
-	TableID    uint `json:"table_id" validate:"required"`
 	CustomerID uint `json:"customer_id" validate:"required"`
 }
 
@@ -14,7 +13,7 @@ type UpdateOrderStatusInput struct {
 type AddOrderItemInput struct {
 	ProductID   uint                        `json:"product_id" validate:"required"`
 	ProductType entity.OrderItemProductType `json:"status" validate:"omitempty,oneof='food', 'deal'"`
-	Quantity    int                         `json:"quantity" validate:"required,min=1"`
+	Quantity    int                         `json:"quantity" validate:"omitempty,min=1"`
 }
 
 type UpdateOrderItemStatusInput struct {
@@ -24,7 +23,6 @@ type UpdateOrderItemStatusInput struct {
 type OrderResponse struct {
 	ID         uint                `json:"id"`
 	Status     entity.OrderStatus  `json:"status"`
-	TableID    uint                `json:"table_id"`
 	CustomerID uint                `json:"customer_id"`
 	OrderItems []OrderItemResponse `json:"order_items"`
 }

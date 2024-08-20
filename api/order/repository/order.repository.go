@@ -53,6 +53,14 @@ func GetOrderItemByID(itemID uint) (*entity.OrderItem, error) {
 	return &orderItem, nil
 }
 
+func GetCustomerOrders(customerID uint) (*[]entity.Order, error) {
+	var orders []entity.Order
+	if err := database.ActiveDB.Where("customer_id = ?", customerID).First(&orders).Error; err != nil {
+		return nil, err
+	}
+	return &orders, nil
+}
+
 func UpdateOrderItem(orderItem *entity.OrderItem) error {
 	return database.ActiveDB.Save(orderItem).Error
 }

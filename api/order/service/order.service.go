@@ -1,15 +1,16 @@
 package service
 
 import (
+	billService "github.co/golang-programming/restaurant/api/bill/service"
+	dealService "github.co/golang-programming/restaurant/api/deal/service"
 	"github.co/golang-programming/restaurant/api/entity"
+	foodService "github.co/golang-programming/restaurant/api/food/service"
 	"github.co/golang-programming/restaurant/api/order/dto"
 	"github.co/golang-programming/restaurant/api/order/repository"
 )
 
 func CreateOrder(input *dto.CreateOrderInput) (*entity.Order, error) {
 	order := &entity.Order{
-		Status:     entity.OrderPending,
-		TableID:    input.TableID,
 		CustomerID: input.CustomerID,
 	}
 
@@ -24,7 +25,7 @@ func GetOrderDetailsByID(orderID uint) (*entity.Order, error) {
 }
 
 func UpdateOrderStatus(orderID uint, input *dto.UpdateOrderStatusInput) (*entity.Order, error) {
-	order, err := getOrderByID(orderID)
+	order, err := GetOrderByID(orderID)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +39,7 @@ func UpdateOrderStatus(orderID uint, input *dto.UpdateOrderStatusInput) (*entity
 }
 
 func DeleteOrder(orderID uint) error {
-	order, err := getOrderByID(orderID)
+	order, err := GetOrderByID(orderID)
 	if err != nil {
 		return err
 	}
@@ -51,7 +52,12 @@ func ListOrders() ([]entity.Order, error) {
 }
 
 func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem, error) {
-	_, err := getOrderByID(orderID)
+	order, err := GetOrderByID(orderID)
+	if err != nil {
+		return nil, err
+	}
+
+	price, err := getProductByIDAndType(input.ProductID, input.ProductType)
 	if err != nil {
 		return nil, err
 	}
@@ -60,12 +66,17 @@ func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem
 		ProductID:   input.ProductID,
 		ProductType: input.ProductType,
 		OrderID:     orderID,
+		Price:       float64(input.Quantity) * price,
 		Quantity:    input.Quantity,
 		Status:      entity.OrderItemOrdering,
 	}
 
 	if err := repository.AddOrderItem(orderItem); err != nil {
 		return nil, err
+	}
+
+	if !order.Bill {
+		billService.RefreshBill(order.bill)
 	}
 
 	return orderItem, nil
@@ -93,7 +104,15 @@ func RemoveOrderItem(orderID, itemID uint) error {
 	return repository.RemoveOrderItem(orderItem)
 }
 
-func getOrderByID(orderID uint) (order *entity.Order, err error) {
+func GetCustomerOrders(customerID uint) (*[]entity.Order, error) {
+	orders, err := repository.GetCustomerOrders(customerID)
+	if err != nil {
+		return nil, err
+	}
+	return orders, nil
+}
+
+func GetOrderByID(orderID uint) (order *entity.Order, err error) {
 	order, err = repository.GetOrderByID(orderID)
 
 	return
@@ -103,4 +122,22 @@ func getOrderItemByID(itemID uint) (orderItem *entity.OrderItem, err error) {
 	orderItem, err = repository.GetOrderItemByID(itemID)
 
 	return
+}
+
+func getProductByIDAndType(productID uint, productType entity.OrderItemProductType) (float64, error) {
+	if productType == entity.OrderItemFood {
+		food, err := foodService.GetFoodByID(productID)
+		if err != nil {
+			return 0, err
+		}
+
+		return food.Price, nil
+	}
+
+	_, err := dealService.GetDealByID(productID)
+	if err != nil {
+		return 0, err
+	}
+
+	return 0, nil
 }
