@@ -16,9 +16,8 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	groupRouter.DELETE("/:id", controller.DeleteMenu)
 	groupRouter.GET("/", controller.ListMenus)
 
-	// Routes for adding/removing foods and deals
-	groupRouter.POST("/:id/food", middleware.InputValidator(&dto.AddFoodToMenuInput{}), controller.AddFoodToMenu)
-	groupRouter.DELETE("/:id/food", middleware.InputValidator(&dto.RemoveFoodFromMenuInput{}), controller.RemoveFoodFromMenu)
-	groupRouter.POST("/:id/deal", middleware.InputValidator(&dto.AddDealToMenuInput{}), controller.AddDealToMenu)
-	groupRouter.DELETE("/:id/deal", middleware.InputValidator(&dto.RemoveDealFromMenuInput{}), controller.RemoveDealFromMenu)
+	groupRouter.POST("/:id/food/:food_id", middleware.InputValidator(&dto.AddFoodToMenuInput{}), controller.AddFoodToMenu)
+	groupRouter.DELETE("/:id/food/:food_id", middleware.InputValidator(&dto.RemoveFoodFromMenuInput{}), controller.RemoveFoodFromMenu)
+	groupRouter.POST("/:id/deal/:deal_id", middleware.InputValidator(&dto.AddDealToMenuInput{}), controller.AddDealToMenu)
+	groupRouter.DELETE("/:id/deal/:deal_id", middleware.InputValidator(&dto.RemoveDealFromMenuInput{}), controller.RemoveDealFromMenu)
 }

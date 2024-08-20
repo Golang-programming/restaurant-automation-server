@@ -71,56 +71,52 @@ func ListMenus(ctx *gin.Context) {
 
 func AddFoodToMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	var input dto.AddFoodToMenuInput
-	_ = ctx.ShouldBindJSON(&input)
+	foodID, _ := strconv.Atoi(ctx.Param("food_id"))
 
-	menu, err := service.AddFoodToMenu(uint(id), &input)
+	 err := service.AddFoodToMenu(uint(id), uint(foodID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, menu)
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
 }
 
 func RemoveFoodFromMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	var input dto.RemoveFoodFromMenuInput
-	_ = ctx.ShouldBindJSON(&input)
+	foodID, _ := strconv.Atoi(ctx.Param("food_id"))
 
-	menu, err := service.RemoveFoodFromMenu(uint(id), &input)
+	 err := service.RemoveFoodFromMenu(uint(id), uint(foodID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, menu)
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
 }
 
 func AddDealToMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	var input dto.AddDealToMenuInput
-	_ = ctx.ShouldBindJSON(&input)
+	dealID, _ := strconv.Atoi(ctx.Param("deal_id"))
 
-	menu, err := service.AddDealToMenu(uint(id), &input)
+	 err := service.AddDealToMenu(uint(id), uint(dealID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, menu)
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
 }
 
 func RemoveDealFromMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	var input dto.RemoveDealFromMenuInput
-	_ = ctx.ShouldBindJSON(&input)
+	dealID, _ := strconv.Atoi(ctx.Param("deal_id"))
 
-	menu, err := service.RemoveDealFromMenu(uint(id), &input)
+	 err := service.RemoveDealFromMenu(uint(id), uint(dealID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, menu)
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
 }

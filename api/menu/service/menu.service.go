@@ -63,13 +63,13 @@ func ListMenus() ([]entity.Menu, error) {
 }
 
 /******* add and remove items from menu *******/
-func AddFoodToMenu(menuID uint, input *dto.AddFoodToMenuInput) (*entity.Menu, error) {
+func AddFoodToMenu(menuID uint, foodID uint)  error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
 		return nil, err
 	}
 
-	food, err := foodService.GetFoodByID(input.FoodID)
+	food, err := foodService.GetFoodByID(foodID)
 	if err != nil {
 		return nil, errors.New("food not found")
 	}
@@ -82,7 +82,7 @@ func AddFoodToMenu(menuID uint, input *dto.AddFoodToMenuInput) (*entity.Menu, er
 	return menu, nil
 }
 
-func RemoveFoodFromMenu(menuID uint, input *dto.RemoveFoodFromMenuInput) (*entity.Menu, error) {
+func RemoveFoodFromMenu(menuID uint, foodID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
 		return nil, err
@@ -90,7 +90,7 @@ func RemoveFoodFromMenu(menuID uint, input *dto.RemoveFoodFromMenuInput) (*entit
 
 	var updatedFoods []entity.Food
 	for _, food := range menu.Foods {
-		if food.ID != input.FoodID {
+		if food.ID != foodID {
 			updatedFoods = append(updatedFoods, food)
 		}
 	}
@@ -103,13 +103,13 @@ func RemoveFoodFromMenu(menuID uint, input *dto.RemoveFoodFromMenuInput) (*entit
 	return menu, nil
 }
 
-func AddDealToMenu(menuID uint, input *dto.AddDealToMenuInput) (*entity.Menu, error) {
+func AddDealToMenu(menuID uint, dealID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
 		return nil, err
 	}
 
-	deal, err := dealService.GetDealByID(input.DealID)
+	deal, err := dealService.GetDealByID(dealID)
 	if err != nil {
 		return nil, errors.New("deal not found")
 	}
@@ -122,7 +122,7 @@ func AddDealToMenu(menuID uint, input *dto.AddDealToMenuInput) (*entity.Menu, er
 	return menu, nil
 }
 
-func RemoveDealFromMenu(menuID uint, input *dto.RemoveDealFromMenuInput) (*entity.Menu, error) {
+func RemoveDealFromMenu(menuID uint, dealID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
 		return nil, err
@@ -130,7 +130,7 @@ func RemoveDealFromMenu(menuID uint, input *dto.RemoveDealFromMenuInput) (*entit
 
 	var updatedDeals []entity.Deal
 	for _, deal := range menu.Deals {
-		if deal.ID != input.DealID {
+		if deal.ID != dealID {
 			updatedDeals = append(updatedDeals, deal)
 		}
 	}

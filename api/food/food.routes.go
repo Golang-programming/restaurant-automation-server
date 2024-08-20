@@ -13,6 +13,7 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	groupRouter.POST("/", middleware.InputValidator(&dto.CreateFoodInput{}), controller.CreateFood)
 	groupRouter.GET("/:id", controller.GetFoodByID)
 	groupRouter.PUT("/:id", middleware.InputValidator(&dto.UpdateFoodInput{}), controller.UpdateFood)
+	groupRouter.PUT("/:id/status", middleware.InputValidator(&dto.ChangeFoodStatusInput{}), controller.ChangeFoodStatus)
 	groupRouter.DELETE("/:id", controller.DeleteFood)
 	groupRouter.GET("/", controller.ListFoods)
 }

@@ -8,3 +8,7 @@ type CreateBillInput struct {
 type MarkBillPaidInput struct {
 	PaidAmount float64 `json:"paid_amount" binding:"required"`
 }
+
+type UpdateDiscountInput struct {
+	DiscountAmount     float64 `json:"discount_amount" binding:"omitempty"`
+}

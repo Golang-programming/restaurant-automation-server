@@ -47,6 +47,20 @@ func UpdateFood(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, food)
 }
 
+func ChangeFoodStatus(ctx *gin.Context) {
+	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	val, _ := ctx.Get("validatedInput")
+	input := val.(*dto.ChangeFoodStatusInput)
+
+	food, err := service.ChangeFoodStatus(uint(id), input)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
+}
+
 func DeleteFood(ctx *gin.Context) {
 	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
 
@@ -60,6 +74,16 @@ func DeleteFood(ctx *gin.Context) {
 }
 
 func ListFoods(ctx *gin.Context) {
+	foods, err := service.ListFoods()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, foods)
+}
+
+func Update(ctx *gin.Context) {
 	foods, err := service.ListFoods()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

@@ -33,26 +33,38 @@ func GetBillByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, bill)
 }
 
-func UpdateBill(ctx *gin.Context) {
+func UpdateDiscount(ctx *gin.Context) {
 	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	val, _ := ctx.Get("validatedInput")
-	input := val.(*dto.UpdateBillInput)
+	input := val.(*dto.UpdateDiscountInput)
 
-	bill, err := service.UpdateBill(uint(id), input)
+	 err := service.UpdateDiscount(uint(id), input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, bill)
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
 }
 
-func MarkBillPaidInput(ctx *gin.Context) {
+func MarkBillPaid(ctx *gin.Context) {
 	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
 	val, _ := ctx.Get("validatedInput")
 	input := val.(*dto.MarkBillPaidInput)
 
-	err := service.MarkBillPaidInput(uint(id), input)
+	err := service.MarkBillPaid(uint(id), input)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"success": true})
+}
+
+func RefreshBill(ctx *gin.Context) {
+	id, _ := strconv.ParseUint(ctx.Param("id"), 10, 32)
+
+	err := service.RefreshBill(uint(id))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

@@ -51,6 +51,21 @@ func UpdateFood(id uint, input *dto.UpdateFoodInput) (*entity.Food, error) {
 	return food, nil
 }
 
+func ChangeFoodStatus(id uint, input *dto.ChangeFoodStatusInput) error {
+	food, err := repository.GetFoodByID(id)
+	if err != nil {
+		return  err
+	}
+
+	food.Status = input.Status
+
+	if err := repository.UpdateFood(food); err != nil {
+		return  err
+	}
+
+	return  nil
+}
+
 func DeleteFood(id uint) error {
 	food, err := repository.GetFoodByID(id)
 	if err != nil {

@@ -13,7 +13,9 @@ func RegisterRoutes(router *gin.RouterGroup) {
 	groupRouter.POST("/", middleware.InputValidator(&dto.CreateBillInput{}), controller.CreateBill)
 	groupRouter.GET("/:id", controller.GetBillByID)
 	groupRouter.PUT("/:id", middleware.InputValidator(&dto.UpdateBillInput{}), controller.UpdateBill)
-	groupRouter.PUT("/:id/mark-as-paid", middleware.InputValidator(&dto.MarkBillPaidInput{}), controller.MarkBillPaidInput)
+	groupRouter.PUT("/:id/mark-as-paid", middleware.InputValidator(&dto.MarkBillPaidInput{}), controller.MarkBillPaid)
+	groupRouter.PUT("/:id/refresh", controller.RefreshBill)
+	groupRouter.PUT("/:id/discount", middleware.InputValidator(&dto.UpdateDiscountInput{}),  controller.UpdateDiscount)
 	groupRouter.DELETE("/:id", controller.DeleteBill)
 	groupRouter.GET("/", controller.ListBills)
 }
