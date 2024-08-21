@@ -42,3 +42,23 @@ func ListMenus() ([]entity.Menu, error) {
 	}
 	return menus, nil
 }
+
+// AddFoodToMenu adds a food item to the menu in the database
+func AddFoodToMenu(menu *entity.Menu, food *entity.Food) error {
+	return database.ActiveDB.Model(menu).Association("Foods").Append(food)
+}
+
+// RemoveFoodFromMenu removes a food item from the menu in the database
+func RemoveFoodFromMenu(menu *entity.Menu, food *entity.Food) error {
+	return database.ActiveDB.Model(menu).Association("Foods").Delete(food)
+}
+
+// AddDealToMenu adds a deal to the menu in the database
+func AddDealToMenu(menu *entity.Menu, deal *entity.Deal) error {
+	return database.ActiveDB.Model(menu).Association("Deals").Append(deal)
+}
+
+// RemoveDealFromMenu removes a deal from the menu in the database
+func RemoveDealFromMenu(menu *entity.Menu, deal *entity.Deal) error {
+	return database.ActiveDB.Model(menu).Association("Deals").Delete(deal)
+}

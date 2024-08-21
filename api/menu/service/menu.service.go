@@ -1,8 +1,6 @@
 package service
 
 import (
-	"errors"
-
 	dealService "github.co/golang-programming/restaurant/api/deal/service"
 	"github.co/golang-programming/restaurant/api/entity"
 	foodService "github.co/golang-programming/restaurant/api/food/service"
@@ -63,82 +61,74 @@ func ListMenus() ([]entity.Menu, error) {
 }
 
 /******* add and remove items from menu *******/
-func AddFoodToMenu(menuID uint, foodID uint)  error {
+func AddFoodToMenu(menuID uint, foodID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	food, err := foodService.GetFoodByID(foodID)
 	if err != nil {
-		return nil, errors.New("food not found")
+		return err
 	}
 
-	menu.Foods = append(menu.Foods, *food)
-	if err := repository.UpdateMenu(menu); err != nil {
-		return nil, err
+	if err := repository.AddFoodToMenu(menu, food); err != nil {
+		return err
 	}
 
-	return menu, nil
+	return nil
 }
 
 func RemoveFoodFromMenu(menuID uint, foodID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	var updatedFoods []entity.Food
-	for _, food := range menu.Foods {
-		if food.ID != foodID {
-			updatedFoods = append(updatedFoods, food)
-		}
+	food, err := foodService.GetFoodByID(foodID)
+	if err != nil {
+		return err
 	}
 
-	menu.Foods = updatedFoods
-	if err := repository.UpdateMenu(menu); err != nil {
-		return nil, err
+	if err := repository.RemoveFoodFromMenu(menu, food); err != nil {
+		return err
 	}
 
-	return menu, nil
+	return nil
 }
 
 func AddDealToMenu(menuID uint, dealID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	deal, err := dealService.GetDealByID(dealID)
 	if err != nil {
-		return nil, errors.New("deal not found")
+		return err
 	}
 
-	menu.Deals = append(menu.Deals, *deal)
-	if err := repository.UpdateMenu(menu); err != nil {
-		return nil, err
+	if err := repository.AddDealToMenu(menu, deal); err != nil {
+		return err
 	}
 
-	return menu, nil
+	return nil
 }
 
 func RemoveDealFromMenu(menuID uint, dealID uint) error {
 	menu, err := repository.GetMenuByID(menuID)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	var updatedDeals []entity.Deal
-	for _, deal := range menu.Deals {
-		if deal.ID != dealID {
-			updatedDeals = append(updatedDeals, deal)
-		}
+	deal, err := dealService.GetDealByID(dealID)
+	if err != nil {
+		return err
 	}
 
-	menu.Deals = updatedDeals
-	if err := repository.UpdateMenu(menu); err != nil {
-		return nil, err
+	if err := repository.RemoveDealFromMenu(menu, deal); err != nil {
+		return err
 	}
 
-	return menu, nil
+	return nil
 }

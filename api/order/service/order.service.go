@@ -75,8 +75,8 @@ func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem
 		return nil, err
 	}
 
-	if !order.Bill {
-		billService.RefreshBill(order.bill)
+	if order.Bill.ID != 0 {
+		billService.RefreshBill(order.Bill.ID)
 	}
 
 	return orderItem, nil
