@@ -52,7 +52,7 @@ func ChangeFoodStatus(ctx *gin.Context) {
 	val, _ := ctx.Get("validatedInput")
 	input := val.(*dto.ChangeFoodStatusInput)
 
-	food, err := service.ChangeFoodStatus(uint(id), input)
+	err := service.ChangeFoodStatus(uint(id), input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

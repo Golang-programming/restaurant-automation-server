@@ -90,7 +90,7 @@ func RefreshBill(id uint) error {
 func UpdateDiscount(id uint, input *dto.UpdateDiscountInput) error {
 	bill, err := repository.GetBillByID(id)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	total := bill.Subtotal - input.DiscountAmount
@@ -99,10 +99,10 @@ func UpdateDiscount(id uint, input *dto.UpdateDiscountInput) error {
 	bill.Total = total
 
 	if err := repository.UpdateBill(bill); err != nil {
-		return nil, err
+		return err
 	}
 
-	return bill, nil
+	return nil
 }
 
 func MarkBillPaid(id uint, input *dto.MarkBillPaidInput) error {
