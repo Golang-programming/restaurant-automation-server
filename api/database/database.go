@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.co/golang-programming/restaurant/api/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -26,19 +25,19 @@ func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
 	}
 
 	db.AutoMigrate(
-		&entity.Bill{},
-		&entity.Customer{},
-		&entity.Deal{},
-		&entity.DealItem{},
-		&entity.Food{},
-		&entity.Invoice{},
-		&entity.InvoiceItem{},
-		&entity.Menu{},
-		&entity.Note{},
-		&entity.Order{},
-		&entity.OrderItem{},
-		&entity.Table{},
-		&entity.Staff{},
+	// &entity.Bill{},
+	// &entity.Customer{},
+	// &entity.Deal{},
+	// &entity.DealItem{},
+	// &entity.Food{},
+	// &entity.Invoice{},
+	// &entity.InvoiceItem{},
+	// &entity.Menu{},
+	// &entity.Note{},
+	// &entity.Order{},
+	// &entity.OrderItem{},
+	// &entity.Table{},
+	// &entity.Staff{},
 	)
 
 	tenants[tenantID] = &TenantConfig{

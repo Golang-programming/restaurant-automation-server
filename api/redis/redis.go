@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"crypto/tls"
 	"log"
 	"time"
 
@@ -15,8 +16,13 @@ var Client *redis.Client
 func init() {
 
 	Client = redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
-		DB:   0,
+		Addr:     "redis-11f85078-zeshanshakil0-6333.a.aivencloud.com:24446",
+		Username: "default",
+		Password: "",
+		DB:       0,
+		TLSConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
 	})
 
 	_, err := Client.Ping(ctx).Result()

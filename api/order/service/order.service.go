@@ -1,7 +1,7 @@
 package service
 
 import (
-	billService "github.co/golang-programming/restaurant/api/bill/service"
+	// billService "github.co/golang-programming/restaurant/api/bill/service"
 	dealService "github.co/golang-programming/restaurant/api/deal/service"
 	"github.co/golang-programming/restaurant/api/entity"
 	foodService "github.co/golang-programming/restaurant/api/food/service"
@@ -76,7 +76,7 @@ func AddOrderItem(orderID uint, input *dto.AddOrderItemInput) (*entity.OrderItem
 	}
 
 	if order.Bill.ID != 0 {
-		billService.RefreshBill(order.Bill.ID)
+		// billService.RefreshBill(order.Bill.ID)
 	}
 
 	return orderItem, nil

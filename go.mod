@@ -1,12 +1,13 @@
 module github.co/golang-programming/restaurant
 
-go 1.22.6
+go 1.23.0
 
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/golang-programming/pp v0.0.0-20240822174603-701c1cf124d7
 	github.com/joho/godotenv v1.5.1
 	golang.org/x/net v0.28.0
 	gorm.io/driver/postgres v1.5.9
@@ -40,6 +41,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
+	github.com/stripe/stripe-go v70.15.0+incompatible // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	golang.org/x/arch v0.9.0 // indirect
