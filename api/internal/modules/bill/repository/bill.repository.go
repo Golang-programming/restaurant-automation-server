@@ -17,6 +17,14 @@ func GetBillByID(id uint) (*entity.Bill, error) {
 	return &bill, nil
 }
 
+func GetBillByTableID(tableID uint) (*entity.Bill, error) {
+	var bill entity.Bill
+	if err := database.ActiveDB.Where("table_id = ?", tableID).First(&bill).Error; err != nil {
+		return nil, err
+	}
+	return &bill, nil
+}
+
 func UpdateBill(bill *entity.Bill) error {
 	return database.ActiveDB.Save(bill).Error
 }

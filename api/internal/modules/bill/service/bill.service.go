@@ -61,6 +61,10 @@ func GetBillByID(id uint) (*entity.Bill, error) {
 	return repository.GetBillByID(id)
 }
 
+func GetBillByTableID(id uint) (*entity.Bill, error) {
+	return repository.GetBillByTableID(id)
+}
+
 func RefreshBill(id uint) error {
 	bill, err := repository.GetBillByID(id)
 	if err != nil {

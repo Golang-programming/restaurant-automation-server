@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.co/golang-programming/restaurant/api/middleware"
-	paymentService "github.co/golang-programming/restaurant/api/payment/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +15,6 @@ func main() {
 		PORT = "9001"
 	}
 
-	paymentService.Charge()
 	app := gin.New()
 
 	v1 := app.Group("/v1")
