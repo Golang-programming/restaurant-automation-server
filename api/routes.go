@@ -14,7 +14,7 @@ import (
 )
 
 // RegisterRoutes registers all the routes for the application.
-func RegisterRoutes(router *gin.RouterGroup, hub *websocket.Hub, natsClient *websocket.NatsClient) {
+func RegisterRoutes(router *gin.RouterGroup) {
 	// Basic health check route
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -32,11 +32,11 @@ func RegisterRoutes(router *gin.RouterGroup, hub *websocket.Hub, natsClient *web
 	payment.RegisterRoutes(router)
 
 	// Register WebSocket routes
-	registerWebSocketRoutes(router, hub, natsClient)
+	registerWebSocketRoutes(router)
 }
 
 // registerWebSocketRoutes registers WebSocket routes for different modules.
-func registerWebSocketRoutes(router *gin.RouterGroup, hub *websocket.Hub, natsClient *websocket.NatsClient) {
+func registerWebSocketRoutes(router *gin.RouterGroup) {
 
 	orderWs := bill.NewBillWebSocket(hub, natsClient)
 

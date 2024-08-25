@@ -14,8 +14,9 @@ type BillWebSocket struct {
 }
 
 // NewBillWebSocket initializes a BillWebSocket handler.
-func NewBillWebSocket(hub *websocket.Hub, natsClient *websocket.NatsClient) *BillWebSocket {
-	return &BillWebSocket{
+func init() {
+
+	&BillWebSocket{
 		hub:        hub,
 		natsClient: natsClient,
 	}
@@ -38,6 +39,6 @@ func (ws *BillWebSocket) HandleMessage(client *websocket.Client, message []byte)
 // handlePayBill processes the "payBill" event.
 func (ws *BillWebSocket) handlePayBill(payload interface{}) {
 	message := websocket.NewMessage("billPaid", payload)
-	ws.hub.Broadcast(message)
-	ws.natsClient.Publish("bills", message) // Optional for scaling
+	// ws.hub.Broadcast(message)
+	// ws.natsClient.Publish("bills", message) // Optional for scaling
 }
