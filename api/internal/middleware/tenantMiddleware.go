@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// TenantMiddleware extracts the X-Tenant-ID header and sets the appropriate DB context
 func TenantMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tenantID := c.GetHeader("X-Tenant-ID")
@@ -24,7 +23,6 @@ func TenantMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Continue to the next handler
 		c.Next()
 	}
 }

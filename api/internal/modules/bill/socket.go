@@ -1,5 +1,6 @@
 package bill
 
+/*
 import (
 	"encoding/json"
 	"log"
@@ -42,3 +43,40 @@ func (ws *BillWebSocket) handlePayBill(payload interface{}) {
 	// ws.hub.Broadcast(message)
 	// ws.natsClient.Publish("bills", message) // Optional for scaling
 }
+*/
+/*
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
+func ConnectToWS(ctx *gin.Context) {
+	fmt.Println("----------------------------------------------------------------")
+	conn, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+	if err != nil {
+		log.Fatalln("Error while upgrading connection:", err)
+	}
+
+	// defer conn.Close()
+
+	messageType, msg, err := conn.ReadMessage()
+	if err != nil {
+		log.Println("Error while reading message:", err)
+		// break
+	}
+
+	switch messageType {
+	case websocket.TextMessage:
+		log.Printf("Received text message: %s", msg)
+	default:
+		log.Printf("Received unknown message type: %d", messageType)
+	}
+
+	// Echo the received message back to the client
+	err = conn.WriteMessage(messageType, msg)
+	if err != nil {
+		log.Println("Error while writing message:", err)
+	}
+}
+*/

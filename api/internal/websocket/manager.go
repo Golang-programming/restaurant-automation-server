@@ -1,6 +1,6 @@
 package websocket
 
-import "sync"
+/* import "sync"
 
 // Manager is responsible for managing all active WebSocket connections.
 var clients map[*Client]bool // Active clients connected to the WebSocket server
@@ -41,3 +41,4 @@ func Broadcast(message *Message) {
 		}
 	}
 }
+*/

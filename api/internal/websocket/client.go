@@ -1,15 +1,6 @@
 package websocket
 
-import (
-	"log"
-	"net/http"
-	"time"
-
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
-)
-
-type Client struct {
+/* type Client struct {
 	Hub  *Hub
 	Conn *websocket.Conn
 	Send chan []byte
@@ -51,9 +42,9 @@ func (c *Client) writePump() {
 			}
 		}
 	}
-}
+} */
 
-var upgrader = websocket.Upgrader{
+/* var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
@@ -78,3 +69,4 @@ func HandleWebSocket(c *gin.Context) {
 	// Start reading messages from the WebSocket connection
 	go client.ReadMessages()
 }
+*/

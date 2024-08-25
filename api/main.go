@@ -18,9 +18,7 @@ func main() {
 	app := gin.New()
 
 	v1 := app.Group("/v1")
-
 	v1.Use(middleware.TenantMiddleware())
-
 	RegisterRoutes(v1)
 
 	fmt.Println("App running on port: ", PORT)

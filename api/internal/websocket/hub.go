@@ -1,20 +1,18 @@
 package websocket
 
-import "sync"
-
 // "net/http"
 // "sync"
 
 // "github.com/gin-gonic/gin"
 // "github.com/gorilla/websocket"
 
-type Hub struct {
+/* type Hub struct {
 	Clients    map[*Client]bool
 	Broadcast  chan []byte
 	Register   chan *Client
 	Unregister chan *Client
 	mu         sync.Mutex
-}
+} */
 
 // var hubInstance *Hub
 // var once sync.Once

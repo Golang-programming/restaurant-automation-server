@@ -1,5 +1,6 @@
 package websocket
 
+/*
 import (
 	"encoding/json"
 	"log"
@@ -38,3 +39,4 @@ func Publish(subject string, message *Message) error {
 func Close() {
 	nc.Close()
 }
+*/

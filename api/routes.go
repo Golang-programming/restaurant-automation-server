@@ -9,7 +9,6 @@ import (
 	"github.co/golang-programming/restaurant/api/internal/modules/payment"
 	staff "github.co/golang-programming/restaurant/api/internal/modules/staff"
 	"github.co/golang-programming/restaurant/api/internal/modules/table"
-	"github.co/golang-programming/restaurant/api/internal/websocket"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,28 +21,25 @@ func RegisterRoutes(router *gin.RouterGroup) {
 		})
 	})
 
-	// Register HTTP routes
 	menu.RegisterRoutes(router)
+	bill.RegisterRoutes(router)
 	customer.RegisterRoutes(router)
 	order.RegisterRoutes(router)
 	table.RegisterRoutes(router)
 	auth.RegisterRoutes(router)
 	staff.RegisterRoutes(router)
 	payment.RegisterRoutes(router)
-
-	// Register WebSocket routes
-	registerWebSocketRoutes(router)
 }
 
 // registerWebSocketRoutes registers WebSocket routes for different modules.
-func registerWebSocketRoutes(router *gin.RouterGroup) {
+/* func registerWebSocketRoutes(router *gin.RouterGroup) {
 
-	orderWs := bill.NewBillWebSocket(hub, natsClient)
+	// orderWs := bill.NewBillWebSocket(hub, natsClient)
 
 	//
-	router.GET("/ws/order", func(c *gin.Context) {
-		websocket.HandleWebSocket(c, orderWs)
-	})
+	// router.GET("/ws/order", func(c *gin.Context) {
+	// 	websocket.HandleWebSocket(c, orderWs)
+	// })
 
 	// // Customer WebSocket route
 	// customerWs := customer.NewCustomerWebSocket(hub, natsClient)
@@ -57,3 +53,4 @@ func registerWebSocketRoutes(router *gin.RouterGroup) {
 	// 	websocket.HandleWebSocket(c, menuWs)
 	// })
 }
+*/

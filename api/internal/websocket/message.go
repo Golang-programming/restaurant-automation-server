@@ -1,5 +1,6 @@
 package websocket
 
+/*
 // Message represents the structure of a WebSocket message.
 type Message struct {
 	Event   string      `json:"event"`   // Event type (e.g., "orderUpdate", "newBill")
@@ -13,3 +14,4 @@ func NewMessage(event string, payload interface{}) *Message {
 		Payload: payload,
 	}
 }
+*/

@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.co/golang-programming/restaurant/api/internal/modules/bill/dto"
-	"github.co/golang-programming/restaurant/api/internal/modules/internal/modules/bill/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/bill/service"
 	"github.com/gin-gonic/gin"
 )
 
