@@ -33,7 +33,7 @@ type Order struct {
 	CustomerID uint        `gorm:"not null"`
 	Customer   *Customer   `gorm:"foreignKey:CustomerID"`
 	OrderItems []OrderItem `gorm:"foreignKey:OrderID"`
-	Bill       Bill        `gorm:"foreignKey:BillID"`
+	Bill       Bill        `gorm:"foreignKey:OrderID"`
 }
 
 type OrderItem struct {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.co/golang-programming/restaurant/api/internal/entity"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -17,28 +18,37 @@ type TenantConfig struct {
 
 var tenants = make(map[string]*TenantConfig)
 
-func initTenantDB(tenantID, dsn string) (*gorm.DB, error) {
+func initTenantDB(tenantID, dsn, schema string) (*gorm.DB, error) {
 	fmt.Println("tenantID, dsn", tenantID, dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
 
+	schemaQuery := fmt.Sprintf("SET search_path TO %s", schema)
+	if err := db.Exec(schemaQuery).Error; err != nil {
+		log.Fatal(err)
+	}
+
 	db.AutoMigrate(
-	// &entity.Bill{},
-	// &entity.Customer{},
-	// &entity.Deal{},
-	// &entity.DealItem{},
-	// &entity.Food{},
-	// &entity.Invoice{},
-	// &entity.InvoiceItem{},
-	// &entity.Menu{},
-	// &entity.Note{},
-	// &entity.Order{},
-	// &entity.OrderItem{},
-	// &entity.Table{},
-	// &entity.Staff{},
+		&entity.Bill{},
+		&entity.Customer{},
+		&entity.Deal{},
+		&entity.DealItem{},
+		&entity.Food{},
+		&entity.Invoice{},
+		&entity.InvoiceItem{},
+		&entity.Menu{},
+		&entity.Note{},
+		&entity.Order{},
+		&entity.OrderItem{},
+		&entity.Table{},
+		&entity.Staff{},
 	)
+
+	if err != nil {
+		log.Fatalf("Could not migrate database: %v", err)
+	}
 
 	tenants[tenantID] = &TenantConfig{
 		DB:  db,
@@ -52,13 +62,14 @@ func init() {
 	tenantList := []struct {
 		TenantID string
 		DSN      string
+		Schema   string
 	}{
-		// Update DSNs to match PostgreSQL format: "host=<hostname> user=<username> password=<password> dbname=<dbname> port=<port> sslmode=<mode>"
-		{"tenant1", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable"},
+		{"tenant1", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable", "tenant1_schema"},
+		{"tenant2", "host=aws-0-ap-southeast-1.pooler.supabase.com user=postgres.dvtazgngnspaajqfvtyx password=HmjYVLfpBQzo1VYK dbname=postgres port=6543 sslmode=disable", "tenant2_schema"},
 	}
 
 	for _, tenant := range tenantList {
-		if _, err := initTenantDB(tenant.TenantID, tenant.DSN); err != nil {
+		if _, err := initTenantDB(tenant.TenantID, tenant.DSN, tenant.Schema); err != nil {
 			log.Fatalf("Could not connect to tenant database (%s): %v", tenant.TenantID, err)
 		}
 	}

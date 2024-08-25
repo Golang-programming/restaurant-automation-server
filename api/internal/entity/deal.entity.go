@@ -8,8 +8,8 @@ import (
 
 type Deal struct {
 	gorm.Model
-	ValidDue time.Time  `gorm:"type"`
-	Title    string     `json:""`
+	ValidDue time.Time  `gorm:"type:timestamp"`
+	Title    string     `json:"type:varchar(255)"`
 	Status   string     `json:"status"`
 	MenuID   uint       `gorm:"not null"`
 	Menu     *Menu      `gorm:"foreignKey:MenuID"`
