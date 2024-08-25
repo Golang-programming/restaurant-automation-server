@@ -1,9 +1,9 @@
 package table
 
 import (
-	"github.co/golang-programming/restaurant/api/middleware"
-	"github.co/golang-programming/restaurant/api/table/controller"
-	"github.co/golang-programming/restaurant/api/table/dto"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/table/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/table/dto"
 	"github.com/gin-gonic/gin"
 )
 

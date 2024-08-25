@@ -1,9 +1,9 @@
 package menu
 
 import (
-	"github.co/golang-programming/restaurant/api/menu/controller"
-	"github.co/golang-programming/restaurant/api/menu/dto"
-	"github.co/golang-programming/restaurant/api/middleware"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/menu/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/menu/dto"
 	"github.com/gin-gonic/gin"
 )
 

@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	billService "github.co/golang-programming/restaurant/api/bill/service"
+	billService "github.co/golang-programming/restaurant/api/internal/modules/bill/service"
 	"github.com/stripe/stripe-go/v79"
 	"github.com/stripe/stripe-go/v79/paymentintent"
 )

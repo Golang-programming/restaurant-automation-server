@@ -1,6 +1,6 @@
 package dto
 
-import "github.co/golang-programming/restaurant/api/entity"
+import "github.co/golang-programming/restaurant/api/internal/entity"
 
 type CreateStaffInput struct {
 	PhoneNumber string           `json:"phone_number" validate:"required"`

@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"github.co/golang-programming/restaurant/api/auth/controller"
-	"github.co/golang-programming/restaurant/api/auth/dto"
-	"github.co/golang-programming/restaurant/api/middleware"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/auth/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/auth/dto"
 	"github.com/gin-gonic/gin"
 )
 

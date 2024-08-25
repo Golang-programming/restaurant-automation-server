@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.co/golang-programming/restaurant/api/payment/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/payment/service"
 	"github.com/gin-gonic/gin"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.co/golang-programming/restaurant/api/middleware"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
 	"github.com/gin-gonic/gin"
 )
 

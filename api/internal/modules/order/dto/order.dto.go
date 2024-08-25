@@ -1,6 +1,6 @@
 package dto
 
-import "github.co/golang-programming/restaurant/api/entity"
+import "github.co/golang-programming/restaurant/api/internal/entity"
 
 type CreateOrderInput struct {
 	CustomerID uint `json:"customer_id" validate:"required"`

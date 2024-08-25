@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.co/golang-programming/restaurant/api/bill/dto"
-	"github.co/golang-programming/restaurant/api/bill/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/bill/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/internal/modules/bill/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,7 +38,7 @@ func UpdateDiscount(ctx *gin.Context) {
 	val, _ := ctx.Get("validatedInput")
 	input := val.(*dto.UpdateDiscountInput)
 
-	 err := service.UpdateDiscount(uint(id), input)
+	err := service.UpdateDiscount(uint(id), input)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

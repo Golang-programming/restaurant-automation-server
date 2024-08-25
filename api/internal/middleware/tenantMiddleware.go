@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.co/golang-programming/restaurant/api/database"
+	"github.co/golang-programming/restaurant/api/pkg/database"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.co/golang-programming/restaurant/api/database"
-	"github.co/golang-programming/restaurant/api/entity"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/pkg/database"
 )
 
 func CreateOrder(order *entity.Order) error {

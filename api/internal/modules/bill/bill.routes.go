@@ -1,9 +1,9 @@
 package bill
 
 import (
-	"github.co/golang-programming/restaurant/api/bill/controller"
-	"github.co/golang-programming/restaurant/api/bill/dto"
-	"github.co/golang-programming/restaurant/api/middleware"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/bill/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/bill/dto"
 	"github.com/gin-gonic/gin"
 )
 

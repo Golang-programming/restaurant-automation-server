@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.co/golang-programming/restaurant/api/customer/dto"
-	"github.co/golang-programming/restaurant/api/customer/repository"
-	"github.co/golang-programming/restaurant/api/entity"
-	utils "github.co/golang-programming/restaurant/api/utils/encryption"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/customer/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/customer/repository"
+	utils "github.co/golang-programming/restaurant/api/pkg/utils/encryption"
 )
 
 func CreateCustomer(input *dto.CreateCustomerInput) (string, error) {

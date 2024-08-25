@@ -1,9 +1,9 @@
 package order
 
 import (
-	"github.co/golang-programming/restaurant/api/middleware"
-	"github.co/golang-programming/restaurant/api/order/controller"
-	"github.co/golang-programming/restaurant/api/order/dto"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/order/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/order/dto"
 	"github.com/gin-gonic/gin"
 )
 

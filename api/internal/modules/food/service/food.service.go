@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.co/golang-programming/restaurant/api/entity"
-	"github.co/golang-programming/restaurant/api/food/dto"
-	"github.co/golang-programming/restaurant/api/food/repository"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/food/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/food/repository"
 )
 
 func CreateFood(input *dto.CreateFoodInput) (*entity.Food, error) {
@@ -54,16 +54,16 @@ func UpdateFood(id uint, input *dto.UpdateFoodInput) (*entity.Food, error) {
 func ChangeFoodStatus(id uint, input *dto.ChangeFoodStatusInput) error {
 	food, err := repository.GetFoodByID(id)
 	if err != nil {
-		return  err
+		return err
 	}
 
 	food.Status = input.Status
 
 	if err := repository.UpdateFood(food); err != nil {
-		return  err
+		return err
 	}
 
-	return  nil
+	return nil
 }
 
 func DeleteFood(id uint) error {

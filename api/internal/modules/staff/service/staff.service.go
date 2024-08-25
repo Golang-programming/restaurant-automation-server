@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.co/golang-programming/restaurant/api/entity"
-	"github.co/golang-programming/restaurant/api/staff/dto"
-	"github.co/golang-programming/restaurant/api/staff/repository"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/staff/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/staff/repository"
 )
 
 func GetStaffByPhoneNumber(phoneNumber string) (*entity.Staff, error) {

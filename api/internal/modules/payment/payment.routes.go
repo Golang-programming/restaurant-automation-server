@@ -1,7 +1,7 @@
 package payment
 
 import (
-	"github.co/golang-programming/restaurant/api/payment/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/payment/controller"
 	"github.com/gin-gonic/gin"
 )
 

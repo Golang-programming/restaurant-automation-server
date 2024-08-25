@@ -1,12 +1,12 @@
 package service
 
 import (
-	// billService "github.co/golang-programming/restaurant/api/bill/service"
-	dealService "github.co/golang-programming/restaurant/api/deal/service"
-	"github.co/golang-programming/restaurant/api/entity"
-	foodService "github.co/golang-programming/restaurant/api/food/service"
-	"github.co/golang-programming/restaurant/api/order/dto"
-	"github.co/golang-programming/restaurant/api/order/repository"
+	// billService "github.co/golang-programming/restaurant/api/internal/modules/internal/modules/bill/service"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	dealService "github.co/golang-programming/restaurant/api/internal/modules/deal/service"
+	foodService "github.co/golang-programming/restaurant/api/internal/modules/food/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/order/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/order/repository"
 )
 
 func CreateOrder(input *dto.CreateOrderInput) (*entity.Order, error) {

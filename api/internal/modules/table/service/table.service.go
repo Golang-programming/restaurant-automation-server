@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.co/golang-programming/restaurant/api/entity"
-	"github.co/golang-programming/restaurant/api/table/dto"
-	"github.co/golang-programming/restaurant/api/table/repository"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/table/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/table/repository"
 )
 
 func CreateTable(input *dto.CreateTableInput) (*entity.Table, error) {

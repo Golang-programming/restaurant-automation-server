@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.co/golang-programming/restaurant/api/menu/dto"
-	"github.co/golang-programming/restaurant/api/menu/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/menu/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/menu/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -73,7 +73,7 @@ func AddFoodToMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 	foodID, _ := strconv.Atoi(ctx.Param("food_id"))
 
-	 err := service.AddFoodToMenu(uint(id), uint(foodID))
+	err := service.AddFoodToMenu(uint(id), uint(foodID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -86,7 +86,7 @@ func RemoveFoodFromMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 	foodID, _ := strconv.Atoi(ctx.Param("food_id"))
 
-	 err := service.RemoveFoodFromMenu(uint(id), uint(foodID))
+	err := service.RemoveFoodFromMenu(uint(id), uint(foodID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -99,7 +99,7 @@ func AddDealToMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 	dealID, _ := strconv.Atoi(ctx.Param("deal_id"))
 
-	 err := service.AddDealToMenu(uint(id), uint(dealID))
+	err := service.AddDealToMenu(uint(id), uint(dealID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -112,7 +112,7 @@ func RemoveDealFromMenu(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 	dealID, _ := strconv.Atoi(ctx.Param("deal_id"))
 
-	 err := service.RemoveDealFromMenu(uint(id), uint(dealID))
+	err := service.RemoveDealFromMenu(uint(id), uint(dealID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

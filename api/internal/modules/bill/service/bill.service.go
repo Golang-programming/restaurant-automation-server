@@ -4,11 +4,11 @@ import (
 	"os"
 	"strconv"
 
-	"github.co/golang-programming/restaurant/api/bill/dto"
-	"github.co/golang-programming/restaurant/api/bill/repository"
-	customerService "github.co/golang-programming/restaurant/api/customer/service"
-	"github.co/golang-programming/restaurant/api/entity"
-	orderService "github.co/golang-programming/restaurant/api/order/service"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/bill/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/bill/repository"
+	customerService "github.co/golang-programming/restaurant/api/internal/modules/customer/service"
+	orderService "github.co/golang-programming/restaurant/api/internal/modules/order/service"
 )
 
 func CreateBill(input *dto.CreateBillInput) (*entity.Bill, error) {

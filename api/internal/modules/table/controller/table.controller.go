@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.co/golang-programming/restaurant/api/table/dto"
-	"github.co/golang-programming/restaurant/api/table/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/table/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/table/service"
 	"github.com/gin-gonic/gin"
 )
 

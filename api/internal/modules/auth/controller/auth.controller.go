@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 
-	"github.co/golang-programming/restaurant/api/auth/dto"
-	"github.co/golang-programming/restaurant/api/auth/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/auth/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/auth/service"
 	"github.com/gin-gonic/gin"
 )
 

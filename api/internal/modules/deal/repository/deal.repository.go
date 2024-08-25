@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.co/golang-programming/restaurant/api/entity"
+	"github.co/golang-programming/restaurant/api/internal/entity"
 	"gorm.io/gorm"
 )
 

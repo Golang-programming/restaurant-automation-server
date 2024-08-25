@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.co/golang-programming/restaurant/api/entity"
-	"github.co/golang-programming/restaurant/api/note/dto"
-	"github.co/golang-programming/restaurant/api/note/repository"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/note/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/note/repository"
 )
 
 func CreateNote(input *dto.CreateNoteInput) (*entity.Note, error) {

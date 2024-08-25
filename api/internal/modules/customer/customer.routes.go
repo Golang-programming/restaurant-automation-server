@@ -1,9 +1,9 @@
 package customer
 
 import (
-	"github.co/golang-programming/restaurant/api/customer/controller"
-	"github.co/golang-programming/restaurant/api/customer/dto"
-	"github.co/golang-programming/restaurant/api/middleware"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/customer/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/customer/dto"
 	"github.com/gin-gonic/gin"
 )
 

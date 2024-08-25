@@ -1,6 +1,6 @@
 package dto
 
-import "github.co/golang-programming/restaurant/api/entity"
+import "github.co/golang-programming/restaurant/api/internal/entity"
 
 type CreateFoodInput struct {
 	Name         string            `json:"name" binding:"required"`
@@ -25,5 +25,5 @@ type UpdateFoodInput struct {
 }
 
 type ChangeFoodStatusInput struct {
-	Status       entity.FoodStatus `json:"status" binding:"required,oneof=active inactive"`
+	Status entity.FoodStatus `json:"status" binding:"required,oneof=active inactive"`
 }

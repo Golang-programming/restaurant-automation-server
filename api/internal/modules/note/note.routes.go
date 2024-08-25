@@ -1,9 +1,9 @@
 package note
 
 import (
-	"github.co/golang-programming/restaurant/api/middleware"
-	"github.co/golang-programming/restaurant/api/note/controller"
-	"github.co/golang-programming/restaurant/api/note/dto"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/note/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/note/dto"
 	"github.com/gin-gonic/gin"
 )
 

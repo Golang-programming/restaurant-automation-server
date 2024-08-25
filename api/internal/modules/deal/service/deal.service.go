@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.co/golang-programming/restaurant/api/deal/repository"
-	"github.co/golang-programming/restaurant/api/entity"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/deal/repository"
 )
 
 func GetDealByID(id uint) (*entity.Deal, error) {

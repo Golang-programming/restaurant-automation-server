@@ -1,11 +1,11 @@
 package service
 
 import (
-	dealService "github.co/golang-programming/restaurant/api/deal/service"
-	"github.co/golang-programming/restaurant/api/entity"
-	foodService "github.co/golang-programming/restaurant/api/food/service"
-	"github.co/golang-programming/restaurant/api/menu/dto"
-	"github.co/golang-programming/restaurant/api/menu/repository"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	dealService "github.co/golang-programming/restaurant/api/internal/modules/deal/service"
+	foodService "github.co/golang-programming/restaurant/api/internal/modules/food/service"
+	"github.co/golang-programming/restaurant/api/internal/modules/menu/dto"
+	"github.co/golang-programming/restaurant/api/internal/modules/menu/repository"
 )
 
 func CreateMenu(input *dto.CreateMenuInput) (*entity.Menu, error) {

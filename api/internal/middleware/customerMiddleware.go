@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.co/golang-programming/restaurant/api/utils/encryption"
+	"github.co/golang-programming/restaurant/api/pkg/utils/encryption"
 	"github.com/gin-gonic/gin"
 )
 

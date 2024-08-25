@@ -7,10 +7,10 @@ import (
 	"os"
 	"time"
 
-	"github.co/golang-programming/restaurant/api/auth/dto"
-	"github.co/golang-programming/restaurant/api/entity"
-	"github.co/golang-programming/restaurant/api/redis"
-	staffService "github.co/golang-programming/restaurant/api/staff/service"
+	"github.co/golang-programming/restaurant/api/internal/entity"
+	"github.co/golang-programming/restaurant/api/internal/modules/auth/dto"
+	staffService "github.co/golang-programming/restaurant/api/internal/modules/staff/service"
+	"github.co/golang-programming/restaurant/api/pkg/redis"
 )
 
 const (

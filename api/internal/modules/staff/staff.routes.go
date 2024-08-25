@@ -1,9 +1,9 @@
 package staff
 
 import (
-	"github.co/golang-programming/restaurant/api/middleware"
-	"github.co/golang-programming/restaurant/api/staff/controller"
-	"github.co/golang-programming/restaurant/api/staff/dto"
+	"github.co/golang-programming/restaurant/api/internal/middleware"
+	"github.co/golang-programming/restaurant/api/internal/modules/staff/controller"
+	"github.co/golang-programming/restaurant/api/internal/modules/staff/dto"
 	"github.com/gin-gonic/gin"
 )
 
